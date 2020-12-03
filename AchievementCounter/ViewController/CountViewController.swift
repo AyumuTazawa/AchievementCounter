@@ -11,7 +11,7 @@ import SwiftConfettiView
 
 
 class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountNumberManagerDelegate, TargetNumberManagerDelegate, AchievementActionManagerDelegate {
-   
+    
     var achievementAnimation: SwiftConfettiView!
     var countNumberManager: CountNumberManager!
     var targetNumberManager: TargetNumberManager!
@@ -48,8 +48,21 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
     @objc func tapped(_ sender: UITapGestureRecognizer) {
         if sender.state == .ended {
             print("tap")
+            addNumber()
+        }
+    }
+    
+    func addNumber() {
+        switch countNumberManager.fecthCountNumber {
+        case 0:
             countNumberManager.plassNumber()
             countNumberManager.saveData(with: countNumberManager.fecthCountNumber)
+            countNumberManager.fecthData()
+            targetNumberManager.fecthTargetNumber()
+            achievementActionManager.achievementAction(countNumber: countNumberManager.fecthCountNumber, targetNumber: targetNumberManager.targetNumber)
+        default:
+            countNumberManager.plassNumber()
+            countNumberManager.updataData(with: countNumberManager.fecthCountNumber)
             countNumberManager.fecthData()
             targetNumberManager.fecthTargetNumber()
             achievementActionManager.achievementAction(countNumber: countNumberManager.fecthCountNumber, targetNumber: targetNumberManager.targetNumber)
@@ -58,9 +71,20 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
     
     
     @IBAction func minusAction(_ sender: Any) {
-        countNumberManager.minusCount()
-        countNumberManager.saveData(with: countNumberManager.fecthCountNumber)
-        countNumberManager.fecthData()
+        minusNumber()
+    }
+    
+    func minusNumber() {
+        switch countNumberManager.fecthCountNumber {
+        case 0:
+            countNumberManager.minusCount()
+            countNumberManager.saveData(with: countNumberManager.fecthCountNumber)
+            countNumberManager.fecthData()
+        default:
+            countNumberManager.minusCount()
+            countNumberManager.updataData(with: countNumberManager.fecthCountNumber)
+            countNumberManager.fecthData()
+        }
     }
     
     @IBAction func deleteAction(_ sender: Any) {
@@ -150,7 +174,6 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
         self.view.addSubview(achievementAnimation)
         achievementAnimation.type = .diamond
         achievementAnimation.startConfetti()
-        
     }
     
     func stopAchievementAnimation() {
