@@ -11,7 +11,7 @@ import UIKit
 import CoreData
 
 protocol  TargetNumberManagerDelegate: class {
-   func showTarget()
+    func showTarget()
 }
 
 class  TargetNumberManager {
@@ -25,14 +25,14 @@ class  TargetNumberManager {
     func saveTargetNumber(with saveTarget: Int) {
         let entity = NSEntityDescription.entity(forEntityName: "TargetNumber", in: context)
         let newTargetNumber = NSManagedObject(entity: entity!, insertInto: context)
-       newTargetNumber.setValue(saveTarget, forKey: "targetNumber")
+        newTargetNumber.setValue(saveTarget, forKey: "targetNumber")
         print(saveTarget)
-            do{
-                try context.save()
-                print("save")
-            }catch {
-                print("err")
-            }
+        do{
+            try context.save()
+            print("save")
+        }catch {
+            print("err")
+        }
     }
     
     func fecthTargetNumber() {
@@ -43,6 +43,7 @@ class  TargetNumberManager {
             for data in result as! [NSManagedObject]{
                 let getNumber = data.value(forKey: "targetNumber") as! Int
                 self.targetNumber = getNumber
+                print(targetNumber)
                 delgate?.showTarget()
             }
         }catch{
@@ -66,5 +67,22 @@ class  TargetNumberManager {
             print("err")
         }
     }
+    
+    func updataTargetNumber(with updataTarget: Int) {
+        let reqest = NSFetchRequest<NSFetchRequestResult>(entityName: "TargetNumber")
+        reqest.returnsObjectsAsFaults = false
+        let myResults = try! context.fetch(reqest)
+        for data in myResults as! [NSManagedObject] {
+            data.setValue(updataTarget, forKey: "targetNumber")
+            print("アップデーと")
+        }
+        do{
+            try context.save()
+            print("save")
+        }catch {
+            print("err")
+        }
+    }
+    
     
 }
