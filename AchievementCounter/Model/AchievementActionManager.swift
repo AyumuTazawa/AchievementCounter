@@ -25,7 +25,10 @@ class AchievementActionManager {
     
     
     func achievementAction(countNumber: Int, targetNumber: Int) {
-        if countNumber == targetNumber {
+        switch countNumber {
+        case 0:
+            break
+        case targetNumber:
             //アニメーションをスタート
             delgate?.startAchievementAnimation()
             DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
@@ -35,6 +38,9 @@ class AchievementActionManager {
             DispatchQueue.main.asyncAfter(deadline: .now() + 6) {
                 self.delgate?.removeAchievementAnimationView()
             }
+        default:
+            break
         }
     }
+    
 }
