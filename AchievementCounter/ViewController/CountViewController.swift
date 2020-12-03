@@ -131,12 +131,17 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
                 style: UIAlertAction.Style.default) { _ in
                     if let text = Int((addTargeAlertTextField?.text)!) {
                         print(text)
-                        self.targetNumberManager.saveTargetNumber(with: text)
-                        self.targetNumberManager.fecthTargetNumber()
+                        switch self.targetNumberManager.targetNumber {
+                        case 0:
+                            self.targetNumberManager.saveTargetNumber(with: text)
+                            self.targetNumberManager.fecthTargetNumber()
+                        default:
+                            self.targetNumberManager.updataTargetNumber(with: text)
+                            self.targetNumberManager.fecthTargetNumber()
+                        }
                     }
             }
         )
-        
         self.present(alert, animated: true, completion: nil)
     }
     
