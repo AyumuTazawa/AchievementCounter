@@ -23,6 +23,31 @@ class CountNumberManager {
     let context = appDelegate.persistentContainer.viewContext
     
     
+    func plassNumber() {
+        if fecthCountNumber == nil {
+            var plassnumber = 0
+            plassnumber += 1
+            fecthCountNumber = plassnumber
+            delgate?.showCountNumber()
+        } else {
+            fecthCountNumber += 1
+            delgate?.showCountNumber()
+        }
+    }
+    
+    func minusCount() {
+        if fecthCountNumber == nil {
+            var plassnumber = 0
+            plassnumber -= 1
+            fecthCountNumber = plassnumber
+            delgate?.showCountNumber()
+        } else {
+            fecthCountNumber -= 1
+            delgate?.showCountNumber()
+        }
+    }
+
+    
     func saveData(with saveNumber: Int) {
         let entity = NSEntityDescription.entity(forEntityName: "CountNumber", in: context)
         let newCountedNumber = NSManagedObject(entity: entity!, insertInto: context)
@@ -69,28 +94,19 @@ class CountNumberManager {
         }
     }
     
-    func plassNumber() {
-        if fecthCountNumber == nil {
-            var plassnumber = 0
-            plassnumber += 1
-            fecthCountNumber = plassnumber
-            delgate?.showCountNumber()
-        } else {
-            fecthCountNumber += 1
-            delgate?.showCountNumber()
-        }
-    }
-    
-    func minusCount() {
-        if fecthCountNumber == nil {
-            var plassnumber = 0
-            plassnumber -= 1
-            fecthCountNumber = plassnumber
-            delgate?.showCountNumber()
-        } else {
-            fecthCountNumber -= 1
-            delgate?.showCountNumber()
-        }
-    }
-    
+    func updataData(with updataNumber: Int) {
+           let reqest = NSFetchRequest<NSFetchRequestResult>(entityName: "CountNumber")
+           reqest.returnsObjectsAsFaults = false
+           let myResults = try! context.fetch(reqest)
+           for data in myResults as! [NSManagedObject] {
+               data.setValue(updataNumber, forKey: "countNumber")
+               print("アップデーと")
+           }
+           do{
+               try context.save()
+               print("save")
+           }catch {
+               print("err")
+           }
+       }
 }
