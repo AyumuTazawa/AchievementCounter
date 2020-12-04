@@ -142,7 +142,7 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
         alert.addTextField(
             configurationHandler: {(textField: UITextField!) in
                 addTargeAlertTextField = textField
-                
+                textField.keyboardType = UIKeyboardType.numberPad
         })
         alert.addAction(
             UIAlertAction(
