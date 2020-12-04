@@ -109,10 +109,10 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
     
     func showActionSheet() {
         // styleをActionSheetに設定
-        let alertSheet = UIAlertController(title: "title", message: "message", preferredStyle: UIAlertController.Style.actionSheet)
+        let alertSheet = UIAlertController(title: "目標回数を設定", message: "目標回数を設定してください", preferredStyle: UIAlertController.Style.actionSheet)
         
         // 自分の選択肢を生成
-        let action1 = UIAlertAction(title: "目標回数を設定", style: UIAlertAction.Style.default, handler: {
+        let action1 = UIAlertAction(title: "設定", style: UIAlertAction.Style.default, handler: {
             (action: UIAlertAction!) in
             self.TargetSetAlert()
         })
@@ -128,6 +128,10 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
         alertSheet.addAction(action1)
         alertSheet.addAction(action2)
         alertSheet.addAction(action3)
+        
+        alertSheet.popoverPresentationController?.sourceView = self.view
+        let screenSize = UIScreen.main.bounds
+        alertSheet.popoverPresentationController?.sourceRect = CGRect(x: screenSize.size.width/2, y: screenSize.size.height, width: 0, height: 0)
         
         self.present(alertSheet, animated: true, completion: nil)
     }
