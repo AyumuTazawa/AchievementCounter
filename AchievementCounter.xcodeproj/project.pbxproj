@@ -50,6 +50,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		633990F12578C192002E3911 /* storyboard */ = {
+			isa = PBXGroup;
+			children = (
+				6347D95D2577B5B400B5693B /* Main.storyboard */,
+			);
+			path = storyboard;
+			sourceTree = "<group>";
+		};
 		6347D94B2577B5B400B5693B = {
 			isa = PBXGroup;
 			children = (
@@ -75,7 +83,7 @@
 				6347D9592577B5B400B5693B /* SceneDelegate.swift */,
 				6347D9772577B7EB00B5693B /* Model */,
 				6347D9702577B76700B5693B /* ViewController */,
-				6347D95D2577B5B400B5693B /* Main.storyboard */,
+				633990F12578C192002E3911 /* storyboard */,
 				6347D9632577B5B700B5693B /* Assets.xcassets */,
 				6347D9652577B5B700B5693B /* LaunchScreen.storyboard */,
 				6347D9682577B5B700B5693B /* Info.plist */,
