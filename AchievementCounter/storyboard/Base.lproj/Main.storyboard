@@ -15,43 +15,60 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WJK-SP-InF">
-                                <rect key="frame" x="44" y="311" width="327" height="80"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="70"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WJK-SP-InF">
+                                <rect key="frame" x="20" y="327" width="374" height="93"/>
+                                <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="80"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZSf-FE-sSH">
-                                <rect key="frame" x="52" y="624" width="90" height="81"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oUV-wV-AYP">
+                                <rect key="frame" x="20" y="549" width="80" height="80"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="80" id="S7K-Ua-lqj"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="40"/>
+                                <state key="normal" title="-"/>
                                 <connections>
-                                    <action selector="deleteAction:" destination="BYZ-38-t0r" eventType="touchDown" id="dkh-9g-uqk"/>
+                                    <action selector="minusAction:" destination="BYZ-38-t0r" eventType="touchDown" id="Lrz-F5-LTQ"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F7g-CW-PGJ">
-                                <rect key="frame" x="52" y="735" width="90" height="81"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bLl-5W-Clr">
+                                <rect key="frame" x="20" y="682" width="80" height="80"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="80" id="W1k-nR-peb"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HiraMaruProN-W4" family="Hiragino Maru Gothic ProN" pointSize="15"/>
+                                <state key="normal" title="リセット"/>
                                 <connections>
-                                    <action selector="minusAction:" destination="BYZ-38-t0r" eventType="touchDown" id="X74-wk-PVp"/>
+                                    <action selector="deleteAction:" destination="BYZ-38-t0r" eventType="touchDown" id="OpI-mw-dcs"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.32744348049999999" green="0.87668871879999999" blue="0.81493765119999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="WJK-SP-InF" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="5S8-r9-UyC"/>
+                            <constraint firstItem="oUV-wV-AYP" firstAttribute="leading" secondItem="bLl-5W-Clr" secondAttribute="leading" id="T8R-Bv-WBJ"/>
+                            <constraint firstItem="WJK-SP-InF" firstAttribute="leading" secondItem="oUV-wV-AYP" secondAttribute="leading" id="Vue-yP-NMr"/>
+                            <constraint firstItem="WJK-SP-InF" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="YW1-MC-OhY"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="bLl-5W-Clr" secondAttribute="bottom" constant="100" id="ZW3-Zl-Ix7"/>
+                            <constraint firstItem="bLl-5W-Clr" firstAttribute="top" secondItem="oUV-wV-AYP" secondAttribute="bottom" constant="53" id="att-AO-Ztg"/>
+                            <constraint firstItem="WJK-SP-InF" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="239" id="cwE-nD-KfX"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="oUV-wV-AYP" secondAttribute="trailing" constant="314" id="hmB-5w-dX3"/>
+                            <constraint firstItem="oUV-wV-AYP" firstAttribute="trailing" secondItem="bLl-5W-Clr" secondAttribute="trailing" id="sE7-a8-Q8p"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="0fd-nd-ewM">
                         <barButtonItem key="leftBarButtonItem" systemItem="add" id="z7F-T5-pGw">
                             <connections>
-                                <action selector="addTargetAction:" destination="BYZ-38-t0r" id="YVc-MR-Y5J"/>
+                                <action selector="addTargetAction:" destination="BYZ-38-t0r" id="QRx-gh-u3s"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="countedNumberDisplayLabel" destination="WJK-SP-InF" id="rXO-19-YzO"/>
-                        <outlet property="deleteButton" destination="ZSf-FE-sSH" id="mqw-mL-wOi"/>
+                        <outlet property="deleteButton" destination="bLl-5W-Clr" id="7xg-bu-FNu"/>
+                        <outlet property="minusButton" destination="oUV-wV-AYP" id="cX2-hk-7Z0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
