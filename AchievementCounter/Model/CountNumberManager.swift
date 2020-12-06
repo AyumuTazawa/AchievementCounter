@@ -22,7 +22,6 @@ class CountNumberManager {
     static let appDelegate = UIApplication.shared.delegate as! AppDelegate
     let context = appDelegate.persistentContainer.viewContext
     
-    
     func plassNumber() {
         if fecthCountNumber == nil {
             var plassnumber = 0
@@ -100,11 +99,10 @@ class CountNumberManager {
            let myResults = try! context.fetch(reqest)
            for data in myResults as! [NSManagedObject] {
                data.setValue(updataNumber, forKey: "countNumber")
-               print("アップデーと")
            }
            do{
                try context.save()
-               print("save")
+               print("アップデート")
            }catch {
                print("err")
            }
