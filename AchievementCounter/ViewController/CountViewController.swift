@@ -19,10 +19,10 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
     
     @IBOutlet weak var countedNumberDisplayLabel: UILabel!
     @IBOutlet weak var deleteButton: UIButton!
+    @IBOutlet weak var minusButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         
         self.countNumberManager = CountNumberManager()
         self.targetNumberManager = TargetNumberManager()
@@ -35,12 +35,21 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
         let plassGestur = UITapGestureRecognizer(target: self, action: #selector(tapped(_:)))
         plassGestur.delegate = self
         self.view.addGestureRecognizer(plassGestur)
-        
-        //角丸の程度を指定
-        //self.deleteButton.layer.cornerRadius = 40.0
-        
+        //デリートボタン
+        self.deleteButton.layer.cornerRadius = 40.0
+        self.deleteButton.layer.shadowOffset = CGSize(width: 0.0, height: 1)
+        self.deleteButton.layer.shadowRadius = 1.5
+        self.deleteButton.layer.shadowColor = UIColor.black.cgColor
+        self.deleteButton.layer.shadowOpacity = 0.7
+        //マイナスボタン
+        self.minusButton.layer.cornerRadius = 40.0
+        self.minusButton.layer.shadowOffset = CGSize(width: 0.0, height: 1)
+        self.minusButton.layer.shadowRadius = 1.5
+        self.minusButton.layer.shadowColor = UIColor.black.cgColor
+        self.minusButton.layer.shadowOpacity = 0.7
         //カウント回数を表示
         countNumberManager.fecthData()
+        print(countNumberManager.fecthCountNumber)
         //navigationTitleセット
         targetNumberManager.fecthTargetNumber()
     }
@@ -53,20 +62,19 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
     }
     
     func addNumber() {
-        switch countNumberManager.fecthCountNumber {
-        case 0:
+        if countNumberManager.fecthCountNumber == 0 {
             countNumberManager.plassNumber()
             countNumberManager.saveData(with: countNumberManager.fecthCountNumber)
-            countNumberManager.fecthData()
-            targetNumberManager.fecthTargetNumber()
-            achievementActionManager.achievementAction(countNumber: countNumberManager.fecthCountNumber, targetNumber: targetNumberManager.targetNumber)
-        default:
+            print("新規追加")
+        } else {
             countNumberManager.plassNumber()
             countNumberManager.updataData(with: countNumberManager.fecthCountNumber)
-            countNumberManager.fecthData()
-            targetNumberManager.fecthTargetNumber()
-            achievementActionManager.achievementAction(countNumber: countNumberManager.fecthCountNumber, targetNumber: targetNumberManager.targetNumber)
+            print("アップデート")
         }
+
+        countNumberManager.fecthData()
+        targetNumberManager.fecthTargetNumber()
+        achievementActionManager.achievementAction(countNumber: countNumberManager.fecthCountNumber, targetNumber: targetNumberManager.targetNumber)
     }
     
     
@@ -105,6 +113,7 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
     //NavigarionBarのTitleに目標回数を表示
     func showTarget() {
         self.navigationItem.title = "\(targetNumberManager.targetNumber)"
+        self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
     }
     
     func showActionSheet() {
@@ -129,9 +138,9 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
         alertSheet.addAction(action2)
         alertSheet.addAction(action3)
         
-        alertSheet.popoverPresentationController?.sourceView = self.view
-        let screenSize = UIScreen.main.bounds
-        alertSheet.popoverPresentationController?.sourceRect = CGRect(x: screenSize.size.width/2, y: screenSize.size.height, width: 0, height: 0)
+       alertSheet.popoverPresentationController?.sourceView = self.view
+       let screenSize = UIScreen.main.bounds
+       alertSheet.popoverPresentationController?.sourceRect = CGRect(x: screenSize.size.width/2, y: screenSize.size.height, width: 0, height: 0)
         
         self.present(alertSheet, animated: true, completion: nil)
     }
@@ -177,6 +186,7 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
         self.achievementAnimation = SwiftConfettiView(frame: self.view.bounds)
         self.view.addSubview(achievementAnimation)
         achievementAnimation.type = .diamond
+        achievementAnimation.intensity = 0.8
         achievementAnimation.startConfetti()
     }
     
