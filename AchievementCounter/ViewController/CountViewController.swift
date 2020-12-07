@@ -47,6 +47,8 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
         self.minusButton.layer.shadowRadius = 1.5
         self.minusButton.layer.shadowColor = UIColor.black.cgColor
         self.minusButton.layer.shadowOpacity = 0.7
+        self.minusButton.layer.borderColor = UIColor.rgb(red: 64, green: 125, blue: 135).cgColor
+        self.minusButton.layer.borderWidth = 1.0
         //カウント回数を表示
         countNumberManager.fecthData()
         print(countNumberManager.fecthCountNumber)
@@ -63,6 +65,7 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
     
     func addNumber() {
         if countNumberManager.fecthCountNumber == 0 {
+            countNumberManager.deleteData()
             countNumberManager.plassNumber()
             countNumberManager.saveData(with: countNumberManager.fecthCountNumber)
             print("新規追加")
@@ -83,16 +86,18 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
     }
     
     func minusNumber() {
-        switch countNumberManager.fecthCountNumber {
-        case 0:
-            countNumberManager.minusCount()
-            countNumberManager.saveData(with: countNumberManager.fecthCountNumber)
-            countNumberManager.fecthData()
-        default:
-            countNumberManager.minusCount()
-            countNumberManager.updataData(with: countNumberManager.fecthCountNumber)
-            countNumberManager.fecthData()
-        }
+        if countNumberManager.fecthCountNumber == 0 {
+                   countNumberManager.deleteData()
+                   countNumberManager.minusCount()
+                   countNumberManager.saveData(with: countNumberManager.fecthCountNumber)
+                   print("新規追加")
+               } else {
+                   countNumberManager.minusCount()
+                   countNumberManager.updataData(with: countNumberManager.fecthCountNumber)
+                   print("アップデート")
+               }
+
+               countNumberManager.fecthData()
     }
     
     @IBAction func deleteAction(_ sender: Any) {
