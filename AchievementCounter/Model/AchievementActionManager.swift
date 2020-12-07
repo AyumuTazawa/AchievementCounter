@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 import SwiftConfettiView
-
+import PromiseKit
 
 protocol AchievementActionManagerDelegate: class {
     func startAchievementAnimation()
@@ -19,27 +19,25 @@ protocol AchievementActionManagerDelegate: class {
 
 class AchievementActionManager {
     
-    //var achievementAnimation: SwiftConfettiView!
-    var countViewController = CountViewController()
     weak var delgate: AchievementActionManagerDelegate?
     
-    
-    func achievementAction(countNumber: Int, targetNumber: Int) {
-        switch countNumber {
-        case 0:
-            break
-        case targetNumber:
-            //アニメーションをスタート
-            delgate?.startAchievementAnimation()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                //アニメーションを止める
-                self.delgate?.stopAchievementAnimation()
+    func achievementAction(countNumber: Int, targetNumber: Int) -> Promise<Void> {
+        return Promise { resolver in
+            switch countNumber {
+            case targetNumber:
+                //アニメーションをスタート
+                self.delgate?.startAchievementAnimation()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                    //アニメーションを止める
+                    self.delgate?.stopAchievementAnimation()
+                }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 6) {
+                    self.delgate?.removeAchievementAnimationView()
+                }
+            default:
+                break
             }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 6) {
-                self.delgate?.removeAchievementAnimationView()
-            }
-        default:
-            break
+            resolver.fulfill(())
         }
     }
     
