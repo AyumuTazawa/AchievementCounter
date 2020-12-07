@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import CoreData
+import PromiseKit
 
 protocol  TargetNumberManagerDelegate: class {
     func showTarget()
@@ -21,68 +22,74 @@ class  TargetNumberManager {
     static let appDelegate = UIApplication.shared.delegate as! AppDelegate
     let context = appDelegate.persistentContainer.viewContext
     
-    
-    func saveTargetNumber(with saveTarget: Int) {
-        let entity = NSEntityDescription.entity(forEntityName: "TargetNumber", in: context)
-        let newTargetNumber = NSManagedObject(entity: entity!, insertInto: context)
-        newTargetNumber.setValue(saveTarget, forKey: "targetNumber")
-        print(saveTarget)
-        do{
-            try context.save()
-            print("save")
-        }catch {
-            print("err")
-        }
-    }
-    
-    func fecthTargetNumber() {
-        let reqest = NSFetchRequest<NSFetchRequestResult>(entityName: "TargetNumber")
-        reqest.returnsObjectsAsFaults = false
-        do{
-            let result = try context.fetch(reqest)
-            for data in result as! [NSManagedObject]{
-                let getNumber = data.value(forKey: "targetNumber") as! Int
-                self.targetNumber = getNumber
-                print(targetNumber)
-                delgate?.showTarget()
-            }
-        }catch{
-            print("err")
-        }
-    }
-    
-    func deleteAchievement() {
-        let reqest = NSFetchRequest<NSFetchRequestResult>(entityName: "TargetNumber")
-        reqest.returnsObjectsAsFaults = false
-        do {
-            let result = try context.fetch(reqest)
-            for data in result as! [NSManagedObject]{
-                context.delete(data)
+     func saveTargetNumber(with saveTarget: Int) -> Promise<Void> {
+        return Promise { resolver in
+            let entity = NSEntityDescription.entity(forEntityName: "TargetNumber", in: context)
+            let newTargetNumber = NSManagedObject(entity: entity!, insertInto: context)
+            newTargetNumber.setValue(saveTarget, forKey: "targetNumber")
+            print(saveTarget)
+            do{
                 try context.save()
-                print("削除完了")
-                self.targetNumber = 0
-                delgate?.showTarget()
+            }catch {
+                print("err")
             }
-        } catch {
-            print("err")
+             resolver.fulfill(())
         }
     }
     
-    func updataTargetNumber(with updataTarget: Int) {
-        let reqest = NSFetchRequest<NSFetchRequestResult>(entityName: "TargetNumber")
-        reqest.returnsObjectsAsFaults = false
-        let myResults = try! context.fetch(reqest)
-        for data in myResults as! [NSManagedObject] {
-            data.setValue(updataTarget, forKey: "targetNumber")
-            print("アップデーと")
-        }
-        do{
-            try context.save()
-            print("save")
-        }catch {
-            print("err")
+    func fecthTargetNumber() -> Promise<Int> {
+        return Promise { resolver in
+            let reqest = NSFetchRequest<NSFetchRequestResult>(entityName: "TargetNumber")
+            reqest.returnsObjectsAsFaults = false
+            do{
+                let result = try context.fetch(reqest)
+                for data in result as! [NSManagedObject]{
+                    let getNumber = data.value(forKey: "targetNumber") as! Int
+                    self.targetNumber = getNumber
+                    print(targetNumber)
+                    delgate?.showTarget()
+                }
+            }catch{
+                print("err")
+            }
+            resolver.fulfill(targetNumber)
         }
     }
     
+    func deleteAchievement() -> Promise<Void> {
+        return Promise { resolver in
+            let reqest = NSFetchRequest<NSFetchRequestResult>(entityName: "TargetNumber")
+            reqest.returnsObjectsAsFaults = false
+            do {
+                let result = try context.fetch(reqest)
+                for data in result as! [NSManagedObject]{
+                    context.delete(data)
+                    try context.save()
+                    self.targetNumber = 0
+                    delgate?.showTarget()
+                }
+            } catch {
+                print("err")
+            }
+            resolver.fulfill(())
+        }
+    }
+    
+    func updataTargetNumber(with updataTarget: Int) -> Promise<Void> {
+        return Promise { resolver in
+            let reqest = NSFetchRequest<NSFetchRequestResult>(entityName: "TargetNumber")
+                   reqest.returnsObjectsAsFaults = false
+                   let myResults = try! context.fetch(reqest)
+                   for data in myResults as! [NSManagedObject] {
+                       data.setValue(updataTarget, forKey: "targetNumber")
+                   }
+                   do{
+                       try context.save()
+                   }catch {
+                       print("err")
+                   }
+             resolver.fulfill(())
+        }
+    }
     
 }
