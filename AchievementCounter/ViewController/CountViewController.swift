@@ -8,7 +8,7 @@
 
 import UIKit
 import SwiftConfettiView
-
+import PromiseKit
 
 class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountNumberManagerDelegate, TargetNumberManagerDelegate, AchievementActionManagerDelegate {
     
@@ -59,50 +59,80 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
     @objc func tapped(_ sender: UITapGestureRecognizer) {
         if sender.state == .ended {
             print("tap")
-            addNumber()
+            self.fostAddNumber()
         }
     }
     
-    func addNumber() {
+    func fostAddNumber() {
         if countNumberManager.fecthCountNumber == 0 {
-            countNumberManager.deleteData()
-            countNumberManager.plassNumber()
-            countNumberManager.saveData(with: countNumberManager.fecthCountNumber)
-            print("新規追加")
+            firstly {
+                self.countNumberManager.deleteData()
+            }.then {
+                self.countNumberManager.plassNumber()
+            }.then { fecthCountNumber in
+                self.countNumberManager.saveData(with: fecthCountNumber)
+            }.then {
+                self.countNumberManager.fecthData()
+            }.catch { err in
+                self.showErrorAlert(title: "エラー", message: "操作をやりな押してください")
+            }
         } else {
-            countNumberManager.plassNumber()
-            countNumberManager.updataData(with: countNumberManager.fecthCountNumber)
-            print("アップデート")
+            firstly {
+                self.countNumberManager.plassNumber()
+            }.then { fecthCountNumber in
+                self.countNumberManager.updataData(with: fecthCountNumber)
+            }.then {
+                self.countNumberManager.fecthData()
+            }.then {_ in
+                self.targetNumberManager.fecthTargetNumber()
+            }.catch { err in
+                self.showErrorAlert(title: "エラー", message: "操作をやりなおしてください")
+            }.finally {
+                self.achievementActionManager.achievementAction(countNumber: self.countNumberManager.fecthCountNumber, targetNumber: self.targetNumberManager.targetNumber)
+            }
         }
-
-        countNumberManager.fecthData()
-        targetNumberManager.fecthTargetNumber()
-        achievementActionManager.achievementAction(countNumber: countNumberManager.fecthCountNumber, targetNumber: targetNumberManager.targetNumber)
     }
+    
     
     
     @IBAction func minusAction(_ sender: Any) {
-        minusNumber()
+        self.fostMinusNumber()
     }
     
-    func minusNumber() {
+    func fostMinusNumber() {
         if countNumberManager.fecthCountNumber == 0 {
-                   countNumberManager.deleteData()
-                   countNumberManager.minusCount()
-                   countNumberManager.saveData(with: countNumberManager.fecthCountNumber)
-                   print("新規追加")
-               } else {
-                   countNumberManager.minusCount()
-                   countNumberManager.updataData(with: countNumberManager.fecthCountNumber)
-                   print("アップデート")
-               }
-
-               countNumberManager.fecthData()
+            firstly {
+                self.countNumberManager.deleteData()
+            }.then {
+                self.countNumberManager.minusCount()
+            }.then { fecthCountNumber in
+                self.countNumberManager.saveData(with: fecthCountNumber)
+            }.then {
+                self.countNumberManager.fecthData()
+            }.catch { err in
+                self.showErrorAlert(title: "エラー", message: "操作をやりな押してください")
+            }
+        } else {
+            firstly {
+                self.countNumberManager.minusCount()
+            }.then { fecthCountNumber in
+                self.countNumberManager.updataData(with: fecthCountNumber)
+            }.then {
+                self.countNumberManager.fecthData()
+            }.catch { err in
+                self.showErrorAlert(title: "エラー", message: "操作をやりな押してください")
+            }
+        }
     }
     
     @IBAction func deleteAction(_ sender: Any) {
-        countNumberManager.deleteData()
-        countNumberManager.fecthData()
+        firstly {
+            self.countNumberManager.deleteData()
+        }.done {
+            self.countNumberManager.fecthData()
+        }.catch { err in
+            print("err")
+        }
     }
     
     func showCountNumber() {
@@ -143,9 +173,9 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
         alertSheet.addAction(action2)
         alertSheet.addAction(action3)
         
-       alertSheet.popoverPresentationController?.sourceView = self.view
-       let screenSize = UIScreen.main.bounds
-       alertSheet.popoverPresentationController?.sourceRect = CGRect(x: screenSize.size.width/2, y: screenSize.size.height, width: 0, height: 0)
+        alertSheet.popoverPresentationController?.sourceView = self.view
+        let screenSize = UIScreen.main.bounds
+        alertSheet.popoverPresentationController?.sourceRect = CGRect(x: screenSize.size.width/2, y: screenSize.size.height, width: 0, height: 0)
         
         self.present(alertSheet, animated: true, completion: nil)
     }
@@ -171,20 +201,34 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
             UIAlertAction(
                 title: "保存",
                 style: UIAlertAction.Style.default) { _ in
-                    if let text = Int((addTargeAlertTextField?.text)!) {
-                        print(text)
-                        switch self.targetNumberManager.targetNumber {
-                        case 0:
-                            self.targetNumberManager.saveTargetNumber(with: text)
-                            self.targetNumberManager.fecthTargetNumber()
-                        default:
-                            self.targetNumberManager.updataTargetNumber(with: text)
-                            self.targetNumberManager.fecthTargetNumber()
-                        }
+                    if let addTargeText = Int((addTargeAlertTextField?.text)!) {
+                    
+                        self.fostSetTarget(addTargeText: addTargeText)
                     }
             }
         )
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    func fostSetTarget(addTargeText: Int){
+        if self.targetNumberManager.targetNumber == 0 {
+            firstly {
+                self.targetNumberManager.saveTargetNumber(with: addTargeText)
+            }.then {
+                self.targetNumberManager.fecthTargetNumber()
+            }.catch { err in
+                self.showErrorAlert(title: "エラー", message: "もう一度設定しなおしてください")
+            }
+            
+        } else {
+            firstly {
+                self.targetNumberManager.updataTargetNumber(with: addTargeText)
+            }.then {
+                self.targetNumberManager.fecthTargetNumber()
+            }.catch { err in
+                self.showErrorAlert(title: "エラー", message: "もう一度設定しなおしてください")
+            }
+        }
     }
     
     func startAchievementAnimation() {
@@ -202,4 +246,14 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
     func removeAchievementAnimationView() {
         achievementAnimation.removeFromSuperview()
     }
+}
+
+extension UIViewController {
+    func showErrorAlert(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        present(alertController, animated: true, completion: nil)
+        
+    }
+    
 }
