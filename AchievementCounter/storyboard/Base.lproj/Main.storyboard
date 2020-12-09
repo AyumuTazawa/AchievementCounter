@@ -15,27 +15,19 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WJK-SP-InF">
-                                <rect key="frame" x="20" y="327" width="374" height="93"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="80"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WJK-SP-InF">
+                                <rect key="frame" x="20" y="301.5" width="374" height="110"/>
+                                <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="95"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oUV-wV-AYP">
-                                <rect key="frame" x="20" y="782" width="80" height="80"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.40811812879999998" green="0.73374396559999999" blue="0.69804006809999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <state key="normal" title="-">
-                                    <color key="titleColor" red="0.95235019919999997" green="0.95248359439999997" blue="0.95230811829999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="minusAction:" destination="BYZ-38-t0r" eventType="touchDown" id="Lrz-F5-LTQ"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bLl-5W-Clr">
-                                <rect key="frame" x="314" y="782" width="80" height="80"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bLl-5W-Clr">
+                                <rect key="frame" x="314" y="761" width="80" height="80"/>
+                                <color key="backgroundColor" red="0.1501481533" green="0.4992144704" blue="0.53845840690000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="80" id="SR3-2M-F3R"/>
+                                    <constraint firstAttribute="width" constant="80" id="ds9-bo-My1"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" name="HiraMaruProN-W4" family="Hiragino Maru Gothic ProN" pointSize="15"/>
                                 <state key="normal" title="リセット">
                                     <color key="titleColor" red="0.95235019919999997" green="0.95248359439999997" blue="0.95230811829999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -44,8 +36,42 @@
                                     <action selector="deleteAction:" destination="BYZ-38-t0r" eventType="touchDown" id="OpI-mw-dcs"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oUV-wV-AYP">
+                                <rect key="frame" x="20" y="761" width="80" height="80"/>
+                                <color key="backgroundColor" red="0.14901960784313725" green="0.49803921568627452" blue="0.53725490196078429" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="80" id="j4b-Fe-PGC"/>
+                                    <constraint firstAttribute="height" constant="80" id="qRt-Dy-XgE"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="35"/>
+                                <state key="normal" title="-">
+                                    <color key="titleColor" red="0.95235019919999997" green="0.95248359439999997" blue="0.95230811829999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="minusAction:" destination="BYZ-38-t0r" eventType="touchDown" id="Lrz-F5-LTQ"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rGt-Gq-tmj">
+                                <rect key="frame" x="20" y="448" width="374" height="0.0"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.32744348049999999" green="0.87668871879999999" blue="0.81493765119999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="bLl-5W-Clr" secondAttribute="trailing" constant="20" id="2cn-wk-ke0"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="rGt-Gq-tmj" secondAttribute="trailing" constant="20" id="8dI-oZ-gGI"/>
+                            <constraint firstItem="WJK-SP-InF" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="EC8-MB-PFj"/>
+                            <constraint firstItem="rGt-Gq-tmj" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="FLB-Tc-PW3"/>
+                            <constraint firstItem="rGt-Gq-tmj" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="GJB-xv-WxD"/>
+                            <constraint firstItem="oUV-wV-AYP" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="ZbD-M9-aYf"/>
+                            <constraint firstItem="rGt-Gq-tmj" firstAttribute="top" secondItem="WJK-SP-InF" secondAttribute="bottom" constant="36.5" id="ams-Pg-UTZ"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="bLl-5W-Clr" secondAttribute="bottom" constant="21" id="dHa-On-myG"/>
+                            <constraint firstItem="rGt-Gq-tmj" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="ecI-sQ-Cw5"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="WJK-SP-InF" secondAttribute="trailing" constant="20" id="vl0-Ik-Ulj"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="oUV-wV-AYP" secondAttribute="bottom" constant="21" id="yRd-H6-qvh"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="0fd-nd-ewM">
@@ -63,7 +89,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1047.8260869565217" y="138.61607142857142"/>
+            <point key="canvasLocation" x="937.68115942028987" y="138.61607142857142"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="x7E-B2-8zg">
@@ -82,7 +108,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VGo-GP-yQ7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="137.68115942028987" y="138.61607142857142"/>
+            <point key="canvasLocation" x="61" y="139"/>
         </scene>
     </scenes>
 </document>
