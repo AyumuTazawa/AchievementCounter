@@ -47,13 +47,11 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
         self.minusButton.layer.shadowRadius = 1.5
         self.minusButton.layer.shadowColor = UIColor.black.cgColor
         self.minusButton.layer.shadowOpacity = 0.7
-        self.minusButton.layer.borderColor = UIColor.rgb(red: 64, green: 125, blue: 135).cgColor
-        self.minusButton.layer.borderWidth = 1.0
+        
         //カウント回数を表示
-        countNumberManager.fecthData()
-        print(countNumberManager.fecthCountNumber)
+        self.countNumberManager.fecthData()
         //navigationTitleセット
-        targetNumberManager.fecthTargetNumber()
+        self.targetNumberManager.fecthTargetNumber()
     }
     
     @objc func tapped(_ sender: UITapGestureRecognizer) {
@@ -64,7 +62,8 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
     }
     
     func fostAddNumber() {
-        if countNumberManager.fecthCountNumber == 0 {
+        switch countNumberManager.fecthCountNumber {
+        case 0:
             firstly {
                 self.countNumberManager.deleteData()
             }.then {
@@ -76,7 +75,20 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
             }.catch { err in
                 self.showErrorAlert(title: "エラー", message: "操作をやりな押してください")
             }
-        } else {
+            
+        case -1:
+            firstly {
+                self.countNumberManager.plassNumber()
+            }.then { fecthCountNumber in
+                self.countNumberManager.updataData(with: fecthCountNumber)
+            }.then {
+                self.countNumberManager.fecthData()
+            }.then {_ in
+                self.targetNumberManager.fecthTargetNumber()
+            }.catch { err in
+                self.showErrorAlert(title: "エラー", message: "操作をやりなおしてください")
+            }
+        default:
             firstly {
                 self.countNumberManager.plassNumber()
             }.then { fecthCountNumber in
@@ -131,24 +143,22 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
         }.done {
             self.countNumberManager.fecthData()
         }.catch { err in
-            print("err")
+            self.showErrorAlert(title: "エラー", message: "操作をやりな押してください")
         }
     }
     
     func showCountNumber() {
         countedNumberDisplayLabel.text = "\(countNumberManager.fecthCountNumber)"
-        
     }
     
     @IBAction func addTargetAction(_ sender: Any) {
         showActionSheet()
-        
     }
     
     //NavigarionBarのTitleに目標回数を表示
     func showTarget() {
-        self.navigationItem.title = "\(targetNumberManager.targetNumber)"
-        self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
+            self.navigationItem.title = "\(targetNumberManager.targetNumber)"
+            self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
     }
     
     func showActionSheet() {
@@ -156,22 +166,22 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
         let alertSheet = UIAlertController(title: "目標回数を設定", message: "目標回数を設定してください", preferredStyle: UIAlertController.Style.actionSheet)
         
         // 自分の選択肢を生成
-        let action1 = UIAlertAction(title: "設定", style: UIAlertAction.Style.default, handler: {
+        let setTargetAction = UIAlertAction(title: "目標回数設定", style: UIAlertAction.Style.default, handler: {
             (action: UIAlertAction!) in
             self.TargetSetAlert()
         })
-        let action2 = UIAlertAction(title: "削除", style: UIAlertAction.Style.destructive, handler: {
+        let deleteTargetAction = UIAlertAction(title: "目標回数を削除", style: UIAlertAction.Style.destructive, handler: {
             (action: UIAlertAction!) in
             self.targetNumberManager.deleteAchievement()
         })
-        let action3 = UIAlertAction(title: "キャンセル", style: UIAlertAction.Style.cancel, handler: {
+        let cancelAction = UIAlertAction(title: "キャンセル", style: UIAlertAction.Style.cancel, handler: {
             (action: UIAlertAction!) in
         })
         
         // アクションを追加.
-        alertSheet.addAction(action1)
-        alertSheet.addAction(action2)
-        alertSheet.addAction(action3)
+        alertSheet.addAction(setTargetAction)
+        alertSheet.addAction(deleteTargetAction)
+        alertSheet.addAction(cancelAction)
         
         alertSheet.popoverPresentationController?.sourceView = self.view
         let screenSize = UIScreen.main.bounds
