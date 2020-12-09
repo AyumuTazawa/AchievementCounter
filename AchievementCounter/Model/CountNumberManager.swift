@@ -40,7 +40,6 @@ class CountNumberManager {
     
     func saveData(with saveNumber: Int) -> Promise<Void> {
         return Promise { resolver in
-            print(saveNumber)
             let entity = NSEntityDescription.entity(forEntityName: "CountNumber", in: context)
             let newCountedNumber = NSManagedObject(entity: entity!, insertInto: context)
             newCountedNumber.setValue(saveNumber, forKey: "countNumber")
@@ -94,8 +93,6 @@ class CountNumberManager {
     }
     
     func updataData(with updataNumber: Int) -> Promise<Void> {
-        print("updataNumber")
-        print(updataNumber)
         return Promise { resolver in
             let reqest = NSFetchRequest<NSFetchRequestResult>(entityName: "CountNumber")
             reqest.returnsObjectsAsFaults = false
