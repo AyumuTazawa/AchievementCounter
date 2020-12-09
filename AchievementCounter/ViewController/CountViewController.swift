@@ -73,7 +73,7 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
             }.then {
                 self.countNumberManager.fecthData()
             }.catch { err in
-                self.showErrorAlert(title: "エラー", message: "操作をやりな押してください")
+                self.showErrorAlert(title: "エラー", message: "操作をやり直してください")
             }
             
         case -1:
@@ -86,7 +86,7 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
             }.then {_ in
                 self.targetNumberManager.fecthTargetNumber()
             }.catch { err in
-                self.showErrorAlert(title: "エラー", message: "操作をやりなおしてください")
+                self.showErrorAlert(title: "エラー", message: "操作をやり直してください")
             }
         default:
             firstly {
@@ -98,7 +98,7 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
             }.then {_ in
                 self.targetNumberManager.fecthTargetNumber()
             }.catch { err in
-                self.showErrorAlert(title: "エラー", message: "操作をやりなおしてください")
+                self.showErrorAlert(title: "エラー", message: "操作をやり直してください")
             }.finally {
                 self.achievementActionManager.achievementAction(countNumber: self.countNumberManager.fecthCountNumber, targetNumber: self.targetNumberManager.targetNumber)
             }
@@ -122,7 +122,7 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
             }.then {
                 self.countNumberManager.fecthData()
             }.catch { err in
-                self.showErrorAlert(title: "エラー", message: "操作をやりな押してください")
+                self.showErrorAlert(title: "エラー", message: "操作をやり直してください")
             }
         } else {
             firstly {
@@ -132,7 +132,7 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
             }.then {
                 self.countNumberManager.fecthData()
             }.catch { err in
-                self.showErrorAlert(title: "エラー", message: "操作をやりな押してください")
+                self.showErrorAlert(title: "エラー", message: "操作をやり直してください")
             }
         }
     }
@@ -143,7 +143,7 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
         }.done {
             self.countNumberManager.fecthData()
         }.catch { err in
-            self.showErrorAlert(title: "エラー", message: "操作をやりな押してください")
+            self.showErrorAlert(title: "エラー", message: "操作をやり直してください")
         }
     }
     
@@ -231,7 +231,7 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
             }.then {
                 self.targetNumberManager.fecthTargetNumber()
             }.catch { err in
-                self.showErrorAlert(title: "エラー", message: "もう一度設定しなおしてください")
+                self.showErrorAlert(title: "エラー", message: "操作をやり直してください")
             }
             
         } else {
@@ -240,7 +240,7 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
             }.then {
                 self.targetNumberManager.fecthTargetNumber()
             }.catch { err in
-                self.showErrorAlert(title: "エラー", message: "もう一度設定しなおしてください")
+                self.showErrorAlert(title: "エラー", message: "操作をやり直してください")
             }
         }
     }
