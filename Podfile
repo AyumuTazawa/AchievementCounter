@@ -8,5 +8,6 @@ target 'AchievementCounter' do
   # Pods for AchievementCounter
 
 pod 'SwiftConfettiView'
+pod "PromiseKit", "~> 6.8"
 
 end
