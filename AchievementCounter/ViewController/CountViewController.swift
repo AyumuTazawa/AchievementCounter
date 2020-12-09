@@ -56,7 +56,6 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
     
     @objc func tapped(_ sender: UITapGestureRecognizer) {
         if sender.state == .ended {
-            print("tap")
             self.fostAddNumber()
         }
     }
