@@ -27,7 +27,6 @@ class  TargetNumberManager {
             let entity = NSEntityDescription.entity(forEntityName: "TargetNumber", in: context)
             let newTargetNumber = NSManagedObject(entity: entity!, insertInto: context)
             newTargetNumber.setValue(saveTarget, forKey: "targetNumber")
-            print(saveTarget)
             do{
                 try context.save()
             }catch {
@@ -46,7 +45,6 @@ class  TargetNumberManager {
                 for data in result as! [NSManagedObject]{
                     let getNumber = data.value(forKey: "targetNumber") as! Int
                     self.targetNumber = getNumber
-                    print(targetNumber)
                     delgate?.showTarget()
                 }
             }catch{
