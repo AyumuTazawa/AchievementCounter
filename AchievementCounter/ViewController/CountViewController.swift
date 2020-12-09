@@ -157,8 +157,12 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
     
     //NavigarionBarのTitleに目標回数を表示
     func showTarget() {
+        if targetNumberManager.targetNumber == 0 {
+            self.navigationItem.title = ""
+        } else {
             self.navigationItem.title = "\(targetNumberManager.targetNumber)"
             self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
+        }
     }
     
     func showActionSheet() {
