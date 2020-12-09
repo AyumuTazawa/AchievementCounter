@@ -18,6 +18,7 @@ protocol CountNumberManagerDelegate: class {
 class CountNumberManager {
     
     public var fecthCountNumber = Int()
+    var getNumber = Int()
     weak var delgate: CountNumberManagerDelegate?
     var achievementActionManager: AchievementActionManager!
     static let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -25,47 +26,23 @@ class CountNumberManager {
     
     func plassNumber() -> Promise<Int> {
         return Promise { resolver in
-            if fecthCountNumber == nil {
-                       var plassnumber = 0
-                       plassnumber += 1
-                       fecthCountNumber = plassnumber
-                       delgate?.showCountNumber()
-                   } else {
-                       fecthCountNumber += 1
-                       delgate?.showCountNumber()
-                   }
-             resolver.fulfill(fecthCountNumber)
-            print("aa")
-            print(fecthCountNumber)
-            print("aa")
+            self.fecthCountNumber += 1
+            resolver.fulfill(self.fecthCountNumber)
         }
-       
     }
     
-    func minusCount() -> Promise<Void> {
-         return Promise { resolver in
-            if fecthCountNumber == nil {
-                var plassnumber = 0
-                plassnumber -= 1
-                fecthCountNumber = plassnumber
-                delgate?.showCountNumber()
-                print("nil")
-            } else {
-                fecthCountNumber -= 1
-                delgate?.showCountNumber()
-                print("else")
-            }
-            resolver.fulfill(())
+    func minusCount() -> Promise<Int> {
+        return Promise { resolver in
+            self.fecthCountNumber -= 1
+            resolver.fulfill(fecthCountNumber)
         }
     }
     
     func saveData(with saveNumber: Int) -> Promise<Void> {
         return Promise { resolver in
-            print("saveNumber")
             print(saveNumber)
             let entity = NSEntityDescription.entity(forEntityName: "CountNumber", in: context)
             let newCountedNumber = NSManagedObject(entity: entity!, insertInto: context)
-            //let saveData = saveNumber
             newCountedNumber.setValue(saveNumber, forKey: "countNumber")
             do{
                 try context.save()
@@ -77,24 +54,21 @@ class CountNumberManager {
         }
     }
     
-    func fecthData() -> Promise<Void> {
-         return Promise { resolver in
+    func fecthData() -> Promise<Int> {
+        return Promise { resolver in
             let reqest = NSFetchRequest<NSFetchRequestResult>(entityName: "CountNumber")
-                   reqest.returnsObjectsAsFaults = false
-                   do{
-                       let result = try context.fetch(reqest)
-                       for data in result as! [NSManagedObject]{
-                           let getNumber = data.value(forKey: "countNumber") as! Int
-                           fecthCountNumber = getNumber
-                           print("fecthData")
-                        print(getNumber)
-                           delgate?.showCountNumber()
-                        
-                       }
-                   }catch{
-                       print("err")
-                   }
-            resolver.fulfill(())
+            reqest.returnsObjectsAsFaults = false
+            do{
+                let result = try self.context.fetch(reqest)
+                for data in result as! [NSManagedObject]{
+                    self.getNumber = data.value(forKey: "countNumber") as! Int
+                    self.fecthCountNumber = getNumber
+                    self.delgate?.showCountNumber()
+                }
+            }catch{
+                print("err")
+            }
+            resolver.fulfill(getNumber)
         }
     }
     
@@ -111,17 +85,15 @@ class CountNumberManager {
                     try context.save()
                     fecthCountNumber = 0
                     delgate?.showCountNumber()
-                   
                 }
             }catch{
                 print("err")
             }
-             resolver.fulfill(())
+            resolver.fulfill(())
         }
     }
     
-    
-     func updataData(with updataNumber: Int) -> Promise<Void> {
+    func updataData(with updataNumber: Int) -> Promise<Void> {
         print("updataNumber")
         print(updataNumber)
         return Promise { resolver in
@@ -133,12 +105,11 @@ class CountNumberManager {
             }
             do{
                 try context.save()
-                print("アップデート")
             }catch {
                 print("err")
             }
             resolver.fulfill(())
         }
     }
-   
+    
 }
