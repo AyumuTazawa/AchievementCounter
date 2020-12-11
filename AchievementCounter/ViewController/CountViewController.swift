@@ -269,4 +269,11 @@ extension UIViewController {
         
     }
     
+   //設置画面に遷移
+   @IBAction func toCounfiguar(_ sender: Any) {
+       let storyboard = UIStoryboard(name: "Configur", bundle: Bundle.main)
+       let rootConfigurViewContoroller = storyboard.instantiateViewController(withIdentifier: "Configur") as! ConfigurViewController
+       self.navigationController?.pushViewController(rootConfigurViewContoroller, animated: true)
+   }
+    
 }
