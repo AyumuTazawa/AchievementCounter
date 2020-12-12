@@ -9,5 +9,6 @@ target 'AchievementCounter' do
 
 pod 'SwiftConfettiView'
 pod "PromiseKit", "~> 6.8"
+pod 'Eureka'
 
 end
