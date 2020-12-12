@@ -80,6 +80,11 @@
                                 <action selector="addTargetAction:" destination="BYZ-38-t0r" id="QRx-gh-u3s"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="edit" id="lSb-yg-f0n">
+                            <connections>
+                                <action selector="toCounfiguar:" destination="BYZ-38-t0r" id="bsa-WW-h9a"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="countedNumberDisplayLabel" destination="WJK-SP-InF" id="rXO-19-YzO"/>
@@ -94,7 +99,7 @@
         <!--Navigation Controller-->
         <scene sceneID="x7E-B2-8zg">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="aHx-JJ-8eg" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="Main" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="aHx-JJ-8eg" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="lVL-IO-3Eh">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
