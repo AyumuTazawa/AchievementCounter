@@ -16,6 +16,7 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
     var countNumberManager: CountNumberManager!
     var targetNumberManager: TargetNumberManager!
     var achievementActionManager: AchievementActionManager!
+    var configurViewController: ConfigurViewController!
     
     @IBOutlet weak var countedNumberDisplayLabel: UILabel!
     @IBOutlet weak var deleteButton: UIButton!
@@ -27,6 +28,7 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
         self.countNumberManager = CountNumberManager()
         self.targetNumberManager = TargetNumberManager()
         self.achievementActionManager = AchievementActionManager()
+        self.configurViewController = ConfigurViewController()
         
         countNumberManager.delgate = self
         targetNumberManager.delgate = self
@@ -61,6 +63,7 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
     }
     
     func fostAddNumber() {
+        self.configurViewController.fostVibrate()
         switch countNumberManager.fecthCountNumber {
         case 0:
             firstly {
@@ -259,6 +262,12 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
     func removeAchievementAnimationView() {
         achievementAnimation.removeFromSuperview()
     }
+    //設置画面に遷移
+    @IBAction func toCounfiguar(_ sender: Any) {
+        let storyboard = UIStoryboard(name: "Configur", bundle: Bundle.main)
+        let rootConfigurViewContoroller = storyboard.instantiateViewController(withIdentifier: "Configur") as! ConfigurViewController
+        self.navigationController?.pushViewController(rootConfigurViewContoroller, animated: true)
+    }
 }
 
 extension UIViewController {
@@ -268,12 +277,4 @@ extension UIViewController {
         present(alertController, animated: true, completion: nil)
         
     }
-    
-   //設置画面に遷移
-   @IBAction func toCounfiguar(_ sender: Any) {
-       let storyboard = UIStoryboard(name: "Configur", bundle: Bundle.main)
-       let rootConfigurViewContoroller = storyboard.instantiateViewController(withIdentifier: "Configur") as! ConfigurViewController
-       self.navigationController?.pushViewController(rootConfigurViewContoroller, animated: true)
-   }
-    
 }
