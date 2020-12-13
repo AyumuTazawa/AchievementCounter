@@ -11,31 +11,35 @@ import Eureka
 import AudioToolbox
 
 class ConfigurViewController: FormViewController {
-    
+  
     var onWiFi : Bool = false
     
     var valueToSave: Bool = false
+    var saveVibrationValue: Bool = false
+    var fetchVivrationValue: Bool!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //効果音
+        form +++ Section("効果音")
+            <<< SwitchRow(){ row in
+                row.title = "効果音"
+               let vibrationValue = UserDefaults.standard.bool(forKey: "Sound")
+                row.value = vibrationValue
+            }.onChange{[unowned self] row in
+                self.valueToSave = row.value!
+                UserDefaults.standard.set(self.valueToSave, forKey: "Sound")
+        }
         //バイブレーション
         form +++ Section("バイブレーション")
             <<< SwitchRow(){ row in
                 row.title = "バイブレーション"
-               let vibrationValue = UserDefaults.standard.bool(forKey: "vibration")
-                row.value = vibrationValue
+                self.fetchVivrationValue = UserDefaults.standard.bool(forKey: "Vibration")
+                row.value = self.fetchVivrationValue
             }.onChange{[unowned self] row in
-                self.valueToSave = row.value!
-                UserDefaults.standard.set(self.valueToSave, forKey: "vibration")
-        }
-        //プッシュ通知
-        form +++ Section("プッシュ通知")
-            <<< SwitchRow(){ row in
-                row.title = "プッシュ通知"
-                row.value = true
-            }.onChange{[unowned self] row in
-                self.onWiFi = row.value!
-                print(self.onWiFi)
+                self.saveVibrationValue = row.value!
+                print(self.saveVibrationValue)
+                UserDefaults.standard.set(self.saveVibrationValue, forKey: "Vibration")
         }
         
         //効果音
@@ -47,18 +51,15 @@ class ConfigurViewController: FormViewController {
                 self.onWiFi = row.value!
                 print(self.onWiFi)
         }
-        
-        
-        
-        
+    
     }
     
-    //バイブレーション
-    func fostVibrate() {
-        let vibrationValue = UserDefaults.standard.bool(forKey: "vibration")
-        if vibrationValue == false {
+    //サウンド設定
+    func fostSoundCoufigur() {
+        let soundValue = UserDefaults.standard.bool(forKey: "Sound")
+        if soundValue == false {
             print("サウンドなし")
-        } else if vibrationValue == true {
+        } else if soundValue == true {
             var soundIdRing:SystemSoundID = 1016
             if let soundUrl = CFBundleCopyResourceURL(CFBundleGetMainBundle(), nil, nil, nil){
                 AudioServicesCreateSystemSoundID(soundUrl, &soundIdRing)
@@ -67,6 +68,15 @@ class ConfigurViewController: FormViewController {
         }
     }
     
-    
+    //バイブレーション設定
+    func fostVibrationCoufigur() {
+        self.fetchVivrationValue = UserDefaults.standard.bool(forKey: "Vibration")
+        if fetchVivrationValue == true {
+            let generator = UINotificationFeedbackGenerator()
+            generator.notificationOccurred(.warning)
+        } else if fetchVivrationValue == false {
+            print("振動しない")
+        }
+    }
     
 }
