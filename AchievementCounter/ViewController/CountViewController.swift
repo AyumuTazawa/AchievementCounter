@@ -63,7 +63,9 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
     }
     
     func fostAddNumber() {
-        self.configurViewController.fostVibrate()
+        self.configurViewController.fostSoundCoufigur()
+        self.configurViewController.fostVibrationCoufigur()
+        
         switch countNumberManager.fecthCountNumber {
         case 0:
             firstly {
