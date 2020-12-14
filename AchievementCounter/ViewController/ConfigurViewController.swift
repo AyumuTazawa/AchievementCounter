@@ -13,8 +13,7 @@ import AudioToolbox
 class ConfigurViewController: FormViewController {
     
     var onWiFi : Bool = false
-    
-    var valueToSave: Bool = false
+    var selectSoundId: SystemSoundID!
     var saveVibrationValue: Bool = false
     var fetchVivrationValue: Bool!
     
@@ -60,6 +59,7 @@ class ConfigurViewController: FormViewController {
                 }
             }
     }
+    
     //バイブレーション設定
     func fostVibrationCoufigur() {
         self.fetchVivrationValue = UserDefaults.standard.bool(forKey: "Vibration")
@@ -77,31 +77,27 @@ class ConfigurViewController: FormViewController {
         let data = fetchSoundId
         switch data {
         case "ファンファーレ":
-            var soundIdRing: SystemSoundID = 1325
-            if let soundUrl = CFBundleCopyResourceURL(CFBundleGetMainBundle(), nil, nil, nil){
-                AudioServicesCreateSystemSoundID(soundUrl, &soundIdRing)
-                AudioServicesPlaySystemSound(soundIdRing)
-            }
+            self.selectSoundId = 1325
+            self.soundTyoe(selectSoundId: self.selectSoundId)
         case "スクリーンロック音":
-            var soundIdRing: SystemSoundID = 1305
-            if let soundUrl = CFBundleCopyResourceURL(CFBundleGetMainBundle(), nil, nil, nil){
-                AudioServicesCreateSystemSoundID(soundUrl, &soundIdRing)
-                AudioServicesPlaySystemSound(soundIdRing)
-            }
+            self.selectSoundId = 1305
+            self.soundTyoe(selectSoundId: self.selectSoundId)
         case "short":
-            var soundIdRing: SystemSoundID = 1258
-            if let soundUrl = CFBundleCopyResourceURL(CFBundleGetMainBundle(), nil, nil, nil){
-                AudioServicesCreateSystemSoundID(soundUrl, &soundIdRing)
-                AudioServicesPlaySystemSound(soundIdRing)
-            }
+            self.selectSoundId = 1258
+            self.soundTyoe(selectSoundId: self.selectSoundId)
         case "double":
-            var soundIdRing: SystemSoundID = 1255
-            if let soundUrl = CFBundleCopyResourceURL(CFBundleGetMainBundle(), nil, nil, nil){
-                AudioServicesCreateSystemSoundID(soundUrl, &soundIdRing)
-                AudioServicesPlaySystemSound(soundIdRing)
-            }
+            self.selectSoundId = 1255
+            self.soundTyoe(selectSoundId: self.selectSoundId)
         default:
             break
+        }
+    }
+    
+    func soundTyoe(selectSoundId: SystemSoundID) {
+        var soundIdRing: SystemSoundID = selectSoundId
+        if let soundUrl = CFBundleCopyResourceURL(CFBundleGetMainBundle(), nil, nil, nil){
+            AudioServicesCreateSystemSoundID(soundUrl, &soundIdRing)
+            AudioServicesPlaySystemSound(soundIdRing)
         }
     }
     
