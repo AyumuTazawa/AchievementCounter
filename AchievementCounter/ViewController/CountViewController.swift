@@ -62,9 +62,9 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
         }
     }
     
-    func fostAddNumber() {
-        self.configurViewController.fostSoundCoufigur()
+    func fostAddNumber() {let fetchSoundId = UserDefaults.standard.string(forKey: "SoundID")
         self.configurViewController.fostVibrationCoufigur()
+        self.configurViewController.fostSoundCoufigur()
         
         switch countNumberManager.fecthCountNumber {
         case 0:
