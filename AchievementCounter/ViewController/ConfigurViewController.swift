@@ -11,7 +11,7 @@ import Eureka
 import AudioToolbox
 
 class ConfigurViewController: FormViewController {
-  
+    
     var onWiFi : Bool = false
     
     var valueToSave: Bool = false
@@ -20,16 +20,6 @@ class ConfigurViewController: FormViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //効果音
-        form +++ Section("効果音")
-            <<< SwitchRow(){ row in
-                row.title = "効果音"
-               let vibrationValue = UserDefaults.standard.bool(forKey: "Sound")
-                row.value = vibrationValue
-            }.onChange{[unowned self] row in
-                self.valueToSave = row.value!
-                UserDefaults.standard.set(self.valueToSave, forKey: "Sound")
-        }
         //バイブレーション
         form +++ Section("バイブレーション")
             <<< SwitchRow(){ row in
@@ -40,34 +30,36 @@ class ConfigurViewController: FormViewController {
                 self.saveVibrationValue = row.value!
                 print(self.saveVibrationValue)
                 UserDefaults.standard.set(self.saveVibrationValue, forKey: "Vibration")
-        }
+            }
         
-        //効果音
-        form +++ Section("効果音")
+        //プッシュ通知
+        form +++ Section("プッシュ通知")
             <<< SwitchRow(){ row in
-                row.title = "効果音"
+                row.title = "プッシュ通知"
                 row.value = true
             }.onChange{[unowned self] row in
                 self.onWiFi = row.value!
                 print(self.onWiFi)
-        }
-    
-    }
-    
-    //サウンド設定
-    func fostSoundCoufigur() {
-        let soundValue = UserDefaults.standard.bool(forKey: "Sound")
-        if soundValue == false {
-            print("サウンドなし")
-        } else if soundValue == true {
-            var soundIdRing:SystemSoundID = 1016
-            if let soundUrl = CFBundleCopyResourceURL(CFBundleGetMainBundle(), nil, nil, nil){
-                AudioServicesCreateSystemSoundID(soundUrl, &soundIdRing)
-                AudioServicesPlaySystemSound(soundIdRing)
             }
-        }
+        //効果音
+        form +++ Section("効果音")
+            <<< PushRow<String>() { row in
+                row.title = "効果音"
+                row.selectorTitle = "効果音を選択して下さい"
+                row.options = ["なし", "ファンファーレ", "スクリーンロック音", "short", "double"]
+                let fetchSoundId = UserDefaults.standard.string(forKey: "SoundID")
+                let data = fetchSoundId
+                if data == nil {
+                    row.value = "なし"
+                } else {
+                    row.value = data
+                }
+            }.onChange {[unowned self] row in
+                if let valu = row.value {
+                    UserDefaults.standard.set(valu, forKey: "SoundID")
+                }
+            }
     }
-    
     //バイブレーション設定
     func fostVibrationCoufigur() {
         self.fetchVivrationValue = UserDefaults.standard.bool(forKey: "Vibration")
@@ -76,6 +68,40 @@ class ConfigurViewController: FormViewController {
             generator.notificationOccurred(.warning)
         } else if fetchVivrationValue == false {
             print("振動しない")
+        }
+    }
+    
+    //効果音
+    func fostSoundCoufigur() {
+        let fetchSoundId = UserDefaults.standard.string(forKey: "SoundID")
+        let data = fetchSoundId
+        switch data {
+        case "ファンファーレ":
+            var soundIdRing: SystemSoundID = 1325
+            if let soundUrl = CFBundleCopyResourceURL(CFBundleGetMainBundle(), nil, nil, nil){
+                AudioServicesCreateSystemSoundID(soundUrl, &soundIdRing)
+                AudioServicesPlaySystemSound(soundIdRing)
+            }
+        case "スクリーンロック音":
+            var soundIdRing: SystemSoundID = 1305
+            if let soundUrl = CFBundleCopyResourceURL(CFBundleGetMainBundle(), nil, nil, nil){
+                AudioServicesCreateSystemSoundID(soundUrl, &soundIdRing)
+                AudioServicesPlaySystemSound(soundIdRing)
+            }
+        case "short":
+            var soundIdRing: SystemSoundID = 1258
+            if let soundUrl = CFBundleCopyResourceURL(CFBundleGetMainBundle(), nil, nil, nil){
+                AudioServicesCreateSystemSoundID(soundUrl, &soundIdRing)
+                AudioServicesPlaySystemSound(soundIdRing)
+            }
+        case "double":
+            var soundIdRing: SystemSoundID = 1255
+            if let soundUrl = CFBundleCopyResourceURL(CFBundleGetMainBundle(), nil, nil, nil){
+                AudioServicesCreateSystemSoundID(soundUrl, &soundIdRing)
+                AudioServicesPlaySystemSound(soundIdRing)
+            }
+        default:
+            break
         }
     }
     
