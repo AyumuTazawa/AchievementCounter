@@ -11,48 +11,50 @@ import Eureka
 import AudioToolbox
 
 class ConfigurViewController: FormViewController {
-    
-    var onWiFi : Bool = false
-    
-    var valueToSave: Bool = false
+
+    var selectSoundId: SystemSoundID!
     var saveVibrationValue: Bool = false
     var fetchVivrationValue: Bool!
+    var savepushValue: Bool = false
+    var fetchPuhValue: Bool!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         //バイブレーション
-        form +++ Section("バイブレーション")
+        form +++ Section("設定")
             <<< SwitchRow(){ row in
                 row.title = "バイブレーション"
                 self.fetchVivrationValue = UserDefaults.standard.bool(forKey: "Vibration")
                 row.value = self.fetchVivrationValue
+               // print(self.fetchPuhValue)
             }.onChange{[unowned self] row in
                 self.saveVibrationValue = row.value!
-                print(self.saveVibrationValue)
                 UserDefaults.standard.set(self.saveVibrationValue, forKey: "Vibration")
             }
         
         //プッシュ通知
-        form +++ Section("プッシュ通知")
+        form +++ Section()
             <<< SwitchRow(){ row in
-                row.title = "プッシュ通知"
-                row.value = true
+                row.title = "目標達成通知"
+                self.fetchPuhValue = UserDefaults.standard.bool(forKey: "Push")
+                print(self.fetchPuhValue)
+                row.value = self.fetchPuhValue
             }.onChange{[unowned self] row in
-                self.onWiFi = row.value!
-                print(self.onWiFi)
+                self.savepushValue = row.value!
+                UserDefaults.standard.set(self.savepushValue, forKey: "Push")
             }
+        
         //効果音
-        form +++ Section("効果音")
+        form +++ Section()
             <<< PushRow<String>() { row in
                 row.title = "効果音"
                 row.selectorTitle = "効果音を選択して下さい"
                 row.options = ["なし", "ファンファーレ", "スクリーンロック音", "short", "double"]
                 let fetchSoundId = UserDefaults.standard.string(forKey: "SoundID")
-                let data = fetchSoundId
-                if data == nil {
+                if fetchSoundId == nil {
                     row.value = "なし"
                 } else {
-                    row.value = data
+                    row.value = fetchSoundId
                 }
             }.onChange {[unowned self] row in
                 if let valu = row.value {
@@ -60,6 +62,25 @@ class ConfigurViewController: FormViewController {
                 }
             }
     }
+    
+    //プッシュ通知設置
+    func pushConfigur() {
+        print("aaaa")
+       self.fetchPuhValue = UserDefaults.standard.bool(forKey: "Push")
+        if self.fetchPuhValue == true {
+            print("aa")
+            let content = UNMutableNotificationContent()
+            content.title = "目標達成！！"
+            content.body = "どんどん頑張ろう！"
+            content.sound = UNNotificationSound.default
+            let request = UNNotificationRequest(identifier: "immediately", content: content, trigger: nil)
+            UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
+        } else if self.fetchPuhValue == false {
+            print("何もしない")
+
+        }
+    }
+    
     //バイブレーション設定
     func fostVibrationCoufigur() {
         self.fetchVivrationValue = UserDefaults.standard.bool(forKey: "Vibration")
@@ -77,31 +98,27 @@ class ConfigurViewController: FormViewController {
         let data = fetchSoundId
         switch data {
         case "ファンファーレ":
-            var soundIdRing: SystemSoundID = 1325
-            if let soundUrl = CFBundleCopyResourceURL(CFBundleGetMainBundle(), nil, nil, nil){
-                AudioServicesCreateSystemSoundID(soundUrl, &soundIdRing)
-                AudioServicesPlaySystemSound(soundIdRing)
-            }
+            self.selectSoundId = 1325
+            self.soundTyoe(selectSoundId: self.selectSoundId)
         case "スクリーンロック音":
-            var soundIdRing: SystemSoundID = 1305
-            if let soundUrl = CFBundleCopyResourceURL(CFBundleGetMainBundle(), nil, nil, nil){
-                AudioServicesCreateSystemSoundID(soundUrl, &soundIdRing)
-                AudioServicesPlaySystemSound(soundIdRing)
-            }
+            self.selectSoundId = 1305
+            self.soundTyoe(selectSoundId: self.selectSoundId)
         case "short":
-            var soundIdRing: SystemSoundID = 1258
-            if let soundUrl = CFBundleCopyResourceURL(CFBundleGetMainBundle(), nil, nil, nil){
-                AudioServicesCreateSystemSoundID(soundUrl, &soundIdRing)
-                AudioServicesPlaySystemSound(soundIdRing)
-            }
+            self.selectSoundId = 1258
+            self.soundTyoe(selectSoundId: self.selectSoundId)
         case "double":
-            var soundIdRing: SystemSoundID = 1255
-            if let soundUrl = CFBundleCopyResourceURL(CFBundleGetMainBundle(), nil, nil, nil){
-                AudioServicesCreateSystemSoundID(soundUrl, &soundIdRing)
-                AudioServicesPlaySystemSound(soundIdRing)
-            }
+            self.selectSoundId = 1255
+            self.soundTyoe(selectSoundId: self.selectSoundId)
         default:
             break
+        }
+    }
+    
+    func soundTyoe(selectSoundId: SystemSoundID) {
+        var soundIdRing: SystemSoundID = selectSoundId
+        if let soundUrl = CFBundleCopyResourceURL(CFBundleGetMainBundle(), nil, nil, nil){
+            AudioServicesCreateSystemSoundID(soundUrl, &soundIdRing)
+            AudioServicesPlaySystemSound(soundIdRing)
         }
     }
     
