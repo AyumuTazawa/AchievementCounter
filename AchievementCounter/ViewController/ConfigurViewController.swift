@@ -26,7 +26,6 @@ class ConfigurViewController: FormViewController {
                 row.title = "バイブレーション"
                 self.fetchVivrationValue = UserDefaults.standard.bool(forKey: "Vibration")
                 row.value = self.fetchVivrationValue
-               // print(self.fetchPuhValue)
             }.onChange{[unowned self] row in
                 self.saveVibrationValue = row.value!
                 UserDefaults.standard.set(self.saveVibrationValue, forKey: "Vibration")
@@ -49,7 +48,7 @@ class ConfigurViewController: FormViewController {
             <<< PushRow<String>() { row in
                 row.title = "効果音"
                 row.selectorTitle = "効果音を選択して下さい"
-                row.options = ["なし", "ファンファーレ", "スクリーンロック音", "short", "double"]
+                row.options = ["なし", "タップ", "ロック", "シャッター", "プッシュ"]
                 let fetchSoundId = UserDefaults.standard.string(forKey: "SoundID")
                 if fetchSoundId == nil {
                     row.value = "なし"
@@ -65,10 +64,8 @@ class ConfigurViewController: FormViewController {
     
     //プッシュ通知設置
     func pushConfigur() {
-        print("aaaa")
        self.fetchPuhValue = UserDefaults.standard.bool(forKey: "Push")
         if self.fetchPuhValue == true {
-            print("aa")
             let content = UNMutableNotificationContent()
             content.title = "目標達成！！"
             content.body = "どんどん頑張ろう！"
@@ -85,8 +82,7 @@ class ConfigurViewController: FormViewController {
     func fostVibrationCoufigur() {
         self.fetchVivrationValue = UserDefaults.standard.bool(forKey: "Vibration")
         if fetchVivrationValue == true {
-            let generator = UINotificationFeedbackGenerator()
-            generator.notificationOccurred(.warning)
+            AudioServicesDisposeSystemSoundID(1003)
         } else if fetchVivrationValue == false {
             print("振動しない")
         }
@@ -97,17 +93,17 @@ class ConfigurViewController: FormViewController {
         let fetchSoundId = UserDefaults.standard.string(forKey: "SoundID")
         let data = fetchSoundId
         switch data {
-        case "ファンファーレ":
-            self.selectSoundId = 1325
+        case "タップ":
+            self.selectSoundId = 1104
             self.soundTyoe(selectSoundId: self.selectSoundId)
-        case "スクリーンロック音":
+        case "ロック":
             self.selectSoundId = 1305
             self.soundTyoe(selectSoundId: self.selectSoundId)
-        case "short":
-            self.selectSoundId = 1258
+        case "シャッター":
+            self.selectSoundId = 1108
             self.soundTyoe(selectSoundId: self.selectSoundId)
-        case "double":
-            self.selectSoundId = 1255
+        case "プッシュ":
+            self.selectSoundId = 1200
             self.soundTyoe(selectSoundId: self.selectSoundId)
         default:
             break
