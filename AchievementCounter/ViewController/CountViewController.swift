@@ -10,7 +10,7 @@ import UIKit
 import SwiftConfettiView
 import PromiseKit
 
-class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountNumberManagerDelegate, TargetNumberManagerDelegate, AchievementActionManagerDelegate {
+class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountNumberManagerDelegate, TargetNumberManagerDelegate, AchievementActionManagerDelegate, ConfigurViewControlleDelegate {
     
     var achievementAnimation: SwiftConfettiView!
     var countNumberManager: CountNumberManager!
@@ -33,6 +33,7 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
         countNumberManager.delgate = self
         targetNumberManager.delgate = self
         achievementActionManager.delgate = self
+        configurViewController.delgate = self
         
         let plassGestur = UITapGestureRecognizer(target: self, action: #selector(tapped(_:)))
         plassGestur.delegate = self
@@ -54,6 +55,14 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
         self.countNumberManager.fecthData()
         //navigationTitleセット
         self.targetNumberManager.fecthTargetNumber()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.configurViewController.backgroundColorhConfigur()
+    }
+    
+    func setBackgroundColor() {
+        self.view.backgroundColor = UIColor(hex: configurViewController.selectColorName)
     }
     
     @objc func tapped(_ sender: UITapGestureRecognizer) {
