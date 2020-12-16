@@ -10,13 +10,21 @@ import UIKit
 import Eureka
 import AudioToolbox
 
-class ConfigurViewController: FormViewController {
+protocol ConfigurViewControlleDelegate: class {
+    func setBackgroundColor()
+}
 
+class ConfigurViewController: FormViewController {
+    
+    weak var delgate: ConfigurViewControlleDelegate?
+    
     var selectSoundId: SystemSoundID!
     var saveVibrationValue: Bool = false
     var fetchVivrationValue: Bool!
     var savepushValue: Bool = false
     var fetchPuhValue: Bool!
+    var colorData: String!
+    var selectColorName: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,9 +38,8 @@ class ConfigurViewController: FormViewController {
                 self.saveVibrationValue = row.value!
                 UserDefaults.standard.set(self.saveVibrationValue, forKey: "Vibration")
             }
-        
-        //プッシュ通知
-        form +++ Section()
+            
+            //プッシュ通知
             <<< SwitchRow(){ row in
                 row.title = "目標達成通知"
                 self.fetchPuhValue = UserDefaults.standard.bool(forKey: "Push")
@@ -41,9 +48,8 @@ class ConfigurViewController: FormViewController {
                 self.savepushValue = row.value!
                 UserDefaults.standard.set(self.savepushValue, forKey: "Push")
             }
-        
-        //効果音
-        form +++ Section()
+            
+            //効果音
             <<< PushRow<String>() { row in
                 row.title = "効果音"
                 row.selectorTitle = "効果音を選択して下さい"
@@ -59,28 +65,30 @@ class ConfigurViewController: FormViewController {
                     UserDefaults.standard.set(valu, forKey: "SoundID")
                 }
             }
+            //背景色
+            <<< PushRow<String>() { row in
+                row.title = "背景"
+                row.selectorTitle = "背景を選択して下さい"
+                row.options = ["みどり", "あお", "みずいろ", "ぴんく", "むらさき"]
+                let fetchColorName = UserDefaults.standard.string(forKey: "ColorName")
+                if fetchColorName == nil {
+                    row.value = "みどり"
+                } else {
+                    print(fetchColorName)
+                    row.value = fetchColorName
+                }
+            }.onChange {[unowned self] row in
+                if let valu = row.value {
+                    print(valu)
+                    UserDefaults.standard.set(valu, forKey: "ColorName")
+                }
+            }
         
         form +++ Section("情報")
             <<< LabelRow() { row in
                 row.title = "バージョン"
-                row.value = "1.1"
+                row.value = "1.2"
             }
-    }
-    
-    //プッシュ通知設置
-    func pushConfigur() {
-       self.fetchPuhValue = UserDefaults.standard.bool(forKey: "Push")
-        if self.fetchPuhValue == true {
-            let content = UNMutableNotificationContent()
-            content.title = "目標達成！！"
-            content.body = "どんどん頑張ろう！"
-            content.sound = UNNotificationSound.default
-            let request = UNNotificationRequest(identifier: "immediately", content: content, trigger: nil)
-            UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
-        } else if self.fetchPuhValue == false {
-            print("何もしない")
-
-        }
     }
     
     //バイブレーション設定
@@ -90,6 +98,21 @@ class ConfigurViewController: FormViewController {
             AudioServicesDisposeSystemSoundID(1003)
         } else if fetchVivrationValue == false {
             print("振動しない")
+        }
+    }
+    
+    //プッシュ通知設置
+    func pushConfigur() {
+        self.fetchPuhValue = UserDefaults.standard.bool(forKey: "Push")
+        if self.fetchPuhValue == true {
+            let content = UNMutableNotificationContent()
+            content.title = "目標達成！！"
+            content.body = "どんどん頑張ろう！"
+            content.sound = UNNotificationSound.default
+            let request = UNNotificationRequest(identifier: "immediately", content: content, trigger: nil)
+            UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
+        } else if self.fetchPuhValue == false {
+            print("何もしない")
         }
     }
     
@@ -123,4 +146,29 @@ class ConfigurViewController: FormViewController {
         }
     }
     
+    //背景色設定
+    func backgroundColorhConfigur() {
+        let fetchColorName = UserDefaults.standard.string(forKey: "ColorName")
+        self.colorData = fetchColorName
+        switch colorData {
+        case "みどり":
+            self.selectColorName = "7bdcd0"
+            delgate?.setBackgroundColor()
+        case "ブルー":
+            self.selectColorName = "4887BF"
+            delgate?.setBackgroundColor()
+        case "みずいろ":
+            self.selectColorName = "83CCD2"
+            delgate?.setBackgroundColor()
+        case "ぴんく":
+            self.selectColorName = "EE869A"
+            delgate?.setBackgroundColor()
+        case "むらさき":
+            self.selectColorName = "a596c7"
+            delgate?.setBackgroundColor()
+        default:
+            self.selectColorName = "7bdcd0"
+            delgate?.setBackgroundColor()
+        }
+    }
 }
