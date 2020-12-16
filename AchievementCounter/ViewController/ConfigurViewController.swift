@@ -36,7 +36,6 @@ class ConfigurViewController: FormViewController {
             <<< SwitchRow(){ row in
                 row.title = "目標達成通知"
                 self.fetchPuhValue = UserDefaults.standard.bool(forKey: "Push")
-                print(self.fetchPuhValue)
                 row.value = self.fetchPuhValue
             }.onChange{[unowned self] row in
                 self.savepushValue = row.value!
@@ -59,6 +58,12 @@ class ConfigurViewController: FormViewController {
                 if let valu = row.value {
                     UserDefaults.standard.set(valu, forKey: "SoundID")
                 }
+            }
+        
+        form +++ Section("情報")
+            <<< LabelRow() { row in
+                row.title = "バージョン"
+                row.value = "1.1"
             }
     }
     
