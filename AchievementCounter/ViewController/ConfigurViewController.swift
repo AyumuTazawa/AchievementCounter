@@ -14,7 +14,7 @@ protocol ConfigurViewControlleDelegate: class {
     func setBackgroundColor()
 }
 
-class ConfigurViewController: FormViewController {
+class ConfigurViewController: FormViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     weak var delgate: ConfigurViewControlleDelegate?
     
@@ -25,6 +25,7 @@ class ConfigurViewController: FormViewController {
     var fetchPuhValue: Bool!
     var colorData: String!
     var selectColorName: String!
+    var selectImage: NSData!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,7 +70,7 @@ class ConfigurViewController: FormViewController {
             <<< PushRow<String>() { row in
                 row.title = "背景"
                 row.selectorTitle = "背景を選択して下さい"
-                row.options = ["みどり", "あお", "みずいろ", "ぴんく", "むらさき"]
+                row.options = ["みどり", "あお", "みずいろ", "ぴんく", "むらさき", "画像"]
                 let fetchColorName = UserDefaults.standard.string(forKey: "ColorName")
                 if fetchColorName == nil {
                     row.value = "みどり"
@@ -77,17 +78,29 @@ class ConfigurViewController: FormViewController {
                     print(fetchColorName)
                     row.value = fetchColorName
                 }
+                print(row.value)
             }.onChange {[unowned self] row in
                 if let valu = row.value {
                     print(valu)
-                    UserDefaults.standard.set(valu, forKey: "ColorName")
+                    if valu == "画像" {
+                        print("gazou")
+                        let picker = UIImagePickerController()
+                        picker.sourceType = .photoLibrary
+                        picker.delegate = self
+                        present(picker, animated: true)
+                        self.present(picker, animated: true, completion: nil)
+                        UserDefaults.standard.set(valu, forKey: "ColorName")
+                    } else {
+                        UserDefaults.standard.set(valu, forKey: "ColorName")
+                    }
                 }
             }
         
         form +++ Section("情報")
             <<< LabelRow() { row in
+                let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
                 row.title = "バージョン"
-                row.value = "1.2"
+                row.value = version
             }
     }
     
@@ -150,25 +163,53 @@ class ConfigurViewController: FormViewController {
     func backgroundColorhConfigur() {
         let fetchColorName = UserDefaults.standard.string(forKey: "ColorName")
         self.colorData = fetchColorName
+        print("背景設定")
         switch colorData {
         case "みどり":
+            UserDefaults.standard.removeObject(forKey: "backgroundImage")
             self.selectColorName = "7bdcd0"
+            self.selectImage = nil
             delgate?.setBackgroundColor()
-        case "ブルー":
+        case "あお":
+            UserDefaults.standard.removeObject(forKey: "backgroundImage")
             self.selectColorName = "4887BF"
+            self.selectImage = nil
             delgate?.setBackgroundColor()
         case "みずいろ":
             self.selectColorName = "83CCD2"
+            self.selectImage = nil
             delgate?.setBackgroundColor()
         case "ぴんく":
             self.selectColorName = "EE869A"
+            self.selectImage = nil
             delgate?.setBackgroundColor()
         case "むらさき":
             self.selectColorName = "a596c7"
+            self.selectImage = nil
+            delgate?.setBackgroundColor()
+        case "画像":
+            let fetchbackgroundImage = UserDefaults.standard.data(forKey: "backgroundImage")
+            self.selectImage = fetchbackgroundImage as! NSData
             delgate?.setBackgroundColor()
         default:
             self.selectColorName = "7bdcd0"
             delgate?.setBackgroundColor()
         }
     }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any])  {
+        if let selectedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            let resizedImage = selectedImage.resized(withPercentage: 1.0)
+            let saveImageData = resizedImage!.pngData() as NSData?
+            UserDefaults.standard.set(saveImageData, forKey: "backgroundImage")
+            UserDefaults.standard.synchronize()
+        }
+        self.dismiss(animated: true)
+    }
+    
+    // 画像選択キャンセル
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
 }
