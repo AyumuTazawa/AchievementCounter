@@ -62,7 +62,16 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
     }
     
     func setBackgroundColor() {
-        self.view.backgroundColor = UIColor(hex: configurViewController.selectColorName)
+        if self.configurViewController.selectColorName == nil {
+            print("nanimosinai")
+        } else {
+            self.view.backgroundColor = UIColor(hex: configurViewController.selectColorName)
+        }
+        if self.configurViewController.selectImage == nil {
+            print("nanimosinai")
+        } else {
+            self.view.backgroundColor = UIColor(patternImage: UIImage(data: self.configurViewController.selectImage as Data)!)
+        }
     }
     
     @objc func tapped(_ sender: UITapGestureRecognizer) {
@@ -218,7 +227,7 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
             configurationHandler: {(textField: UITextField!) in
                 addTargeAlertTextField = textField
                 textField.keyboardType = UIKeyboardType.numberPad
-        })
+            })
         alert.addAction(
             UIAlertAction(
                 title: "Cancel",
@@ -228,10 +237,10 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
             UIAlertAction(
                 title: "保存",
                 style: UIAlertAction.Style.default) { _ in
-                    if let addTargeText = Int((addTargeAlertTextField?.text)!) {
+                if let addTargeText = Int((addTargeAlertTextField?.text)!) {
                     
-                        self.fostSetTarget(addTargeText: addTargeText)
-                    }
+                    self.fostSetTarget(addTargeText: addTargeText)
+                }
             }
         )
         self.present(alert, animated: true, completion: nil)
