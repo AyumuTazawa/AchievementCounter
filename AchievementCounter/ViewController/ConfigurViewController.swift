@@ -65,12 +65,14 @@ class ConfigurViewController: FormViewController, UIImagePickerControllerDelegat
                 if let valu = row.value {
                     UserDefaults.standard.set(valu, forKey: "SoundID")
                 }
+            }.onPresent { form, selectorController in
+                selectorController.enableDeselection = false
             }
             //背景色
             <<< PushRow<String>() { row in
                 row.title = "背景"
                 row.selectorTitle = "背景を選択して下さい"
-                row.options = ["みどり", "あお", "みずいろ", "ぴんく", "むらさき", "画像"]
+                row.options = ["みどり", "あお", "ぴんく", "むらさき", "画像"]
                 let fetchColorName = UserDefaults.standard.string(forKey: "ColorName")
                 if fetchColorName == nil {
                     row.value = "みどり"
@@ -78,8 +80,7 @@ class ConfigurViewController: FormViewController, UIImagePickerControllerDelegat
                     print(fetchColorName)
                     row.value = fetchColorName
                 }
-                print(row.value)
-            }.onChange {[unowned self] row in
+            }.onChange {[unowned self] row  in
                 if let valu = row.value {
                     print(valu)
                     if valu == "画像" {
@@ -91,9 +92,12 @@ class ConfigurViewController: FormViewController, UIImagePickerControllerDelegat
                         self.present(picker, animated: true, completion: nil)
                         UserDefaults.standard.set(valu, forKey: "ColorName")
                     } else {
+                        print(valu)
                         UserDefaults.standard.set(valu, forKey: "ColorName")
                     }
                 }
+            }.onPresent { form, selectorController in
+                selectorController.enableDeselection = false
             }
         
         form +++ Section("情報")
@@ -173,10 +177,6 @@ class ConfigurViewController: FormViewController, UIImagePickerControllerDelegat
         case "あお":
             UserDefaults.standard.removeObject(forKey: "backgroundImage")
             self.selectColorName = "4887BF"
-            self.selectImage = nil
-            delgate?.setBackgroundColor()
-        case "みずいろ":
-            self.selectColorName = "83CCD2"
             self.selectImage = nil
             delgate?.setBackgroundColor()
         case "ぴんく":
