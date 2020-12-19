@@ -9,15 +9,16 @@
 import UIKit
 import Eureka
 import AudioToolbox
+import CropViewController
 
 protocol ConfigurViewControlleDelegate: class {
     func setBackgroundColor()
 }
 
-class ConfigurViewController: FormViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class ConfigurViewController: FormViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CropViewControllerDelegate {
     
     weak var delgate: ConfigurViewControlleDelegate?
-    
+    var countViewController: CountViewController!
     var selectSoundId: SystemSoundID!
     var saveVibrationValue: Bool = false
     var fetchVivrationValue: Bool!
@@ -26,9 +27,10 @@ class ConfigurViewController: FormViewController, UIImagePickerControllerDelegat
     var colorData: String!
     var selectColorName: String!
     var selectImage: NSData!
-    
+    var image:UIImage?
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.countViewController = CountViewController()
         //バイブレーション
         form +++ Section("設定")
             <<< SwitchRow(){ row in
@@ -197,14 +199,45 @@ class ConfigurViewController: FormViewController, UIImagePickerControllerDelegat
         }
     }
     
+    func setImagePicker(){
+        let picker = UIImagePickerController()
+        picker.sourceType = .photoLibrary
+        picker.delegate = self
+        present(picker, animated: true, completion: nil)
+    }
+    
+    func cropViewController(_ cropViewController: CropViewController, didCropToImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
+        //トリミング編集が終えたら、呼び出される。
+        print("image")
+        updateImageViewWithImage(image, fromCropViewController: cropViewController)
+    }
+    
+    func updateImageViewWithImage(_ image: UIImage, fromCropViewController cropViewController: CropViewController) {
+        let saveImageData = image.pngData() as NSData?
+        UserDefaults.standard.set(saveImageData, forKey: "backgroundImage")
+        UserDefaults.standard.synchronize()
+        cropViewController.dismiss(animated: true, completion: nil)
+    }
+    
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any])  {
-        if let selectedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-            let resizedImage = selectedImage.resized(withPercentage: 1.0)
-            let saveImageData = resizedImage!.pngData() as NSData?
-            UserDefaults.standard.set(saveImageData, forKey: "backgroundImage")
-            UserDefaults.standard.synchronize()
+        guard let pickerImage = (info[UIImagePickerController.InfoKey.originalImage] as? UIImage) else { return }
+        let cropController = CropViewController(croppingStyle: .default, image: pickerImage)
+        
+        cropController.delegate = self
+        
+        cropController.customAspectRatio = UIScreen.main.nativeBounds.size
+        
+        cropController.aspectRatioPickerButtonHidden = true
+        cropController.resetAspectRatioEnabled = false
+        cropController.rotateButtonsHidden = true
+        
+        cropController.cropView.cropBoxResizeEnabled = false
+    
+        picker.dismiss(animated: true) {
+            
+            self.present(cropController, animated: true, completion: nil)
         }
-        self.dismiss(animated: true)
     }
     
     // 画像選択キャンセル
