@@ -20,7 +20,7 @@ protocol AchievementActionManagerDelegate: class {
 class AchievementActionManager {
     
     weak var delgate: AchievementActionManagerDelegate?
-    var configur = ConfigurViewController()
+    var pushManager = PushManager()
     
     func achievementAction(countNumber: Int, targetNumber: Int) -> Promise<Void> {
         return Promise { resolver in
@@ -28,7 +28,7 @@ class AchievementActionManager {
             case targetNumber:
                 //アニメーションをスタート
                 self.delgate?.startAchievementAnimation()
-                self.configur.pushConfigur()
+                self.pushManager.pushConfigur()
                 DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                     //アニメーションを止める
                     self.delgate?.stopAchievementAnimation()
