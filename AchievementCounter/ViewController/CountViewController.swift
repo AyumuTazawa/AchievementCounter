@@ -17,7 +17,9 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
     var targetNumberManager: TargetNumberManager!
     var achievementActionManager: AchievementActionManager!
     var configurViewController: ConfigurViewController!
-    
+    var vibrationManager: VibrationManager!
+    var imageSize: CGSize!
+    @IBOutlet weak var bacgroundImageView: UIImageView!
     @IBOutlet weak var countedNumberDisplayLabel: UILabel!
     @IBOutlet weak var deleteButton: UIButton!
     @IBOutlet weak var minusButton: UIButton!
@@ -25,10 +27,13 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        getImageSize()
+        
         self.countNumberManager = CountNumberManager()
         self.targetNumberManager = TargetNumberManager()
         self.achievementActionManager = AchievementActionManager()
         self.configurViewController = ConfigurViewController()
+        self.vibrationManager = VibrationManager()
         
         countNumberManager.delgate = self
         targetNumberManager.delgate = self
@@ -65,13 +70,25 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
         if self.configurViewController.selectColorName == nil {
             print("nanimosinai")
         } else {
+            self.bacgroundImageView.image = nil
             self.view.backgroundColor = UIColor(hex: configurViewController.selectColorName)
         }
         if self.configurViewController.selectImage == nil {
             print("nanimosinai")
         } else {
-            self.view.backgroundColor = UIColor(patternImage: UIImage(data: self.configurViewController.selectImage as Data)!)
+            //self.view.backgroundColor = UIColor(patternImage: UIImage(data: self.configurViewController.selectImage as Data)!)
+            self.bacgroundImageView.image = UIImage(data: self.configurViewController.selectImage as Data)
         }
+    }
+    
+    func getImageSize() {
+        self.imageSize = self.bacgroundImageView.frame.size
+        print(self.imageSize)
+        let saveImagewidth = Double(imageSize.width)
+        print(saveImagewidth)
+        let saveImageheight = Double(imageSize.height)
+        UserDefaults.standard.set(saveImagewidth, forKey: "Imagewidth")
+        UserDefaults.standard.set(saveImageheight, forKey: "Imageheight")
     }
     
     @objc func tapped(_ sender: UITapGestureRecognizer) {
@@ -81,7 +98,7 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
     }
     
     func fostAddNumber() {let fetchSoundId = UserDefaults.standard.string(forKey: "SoundID")
-        self.configurViewController.fostVibrationCoufigur()
+        self.vibrationManager.fostVibrationCoufigur()
         self.configurViewController.fostSoundCoufigur()
         
         switch countNumberManager.fecthCountNumber {
@@ -126,8 +143,6 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
             }
         }
     }
-    
-    
     
     @IBAction func minusAction(_ sender: Any) {
         self.fostMinusNumber()
