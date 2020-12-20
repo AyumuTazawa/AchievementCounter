@@ -27,10 +27,16 @@ class ConfigurViewController: FormViewController, UIImagePickerControllerDelegat
     var colorData: String!
     var selectColorName: String!
     var selectImage: NSData!
-    var image:UIImage?
+   // var image:UIImage?
+    var soundTypeManagaer = SoundTypeManagaer()
+    var fetcImagewidth: Double!
+    var fetcImageheight: Double!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.countViewController = CountViewController()
+        self.fetcImagewidth = UserDefaults.standard.double(forKey: "Imagewidth")
+        self.fetcImageheight = UserDefaults.standard.double(forKey: "Imageheight")
         //バイブレーション
         form +++ Section("設定")
             <<< SwitchRow(){ row in
@@ -79,7 +85,6 @@ class ConfigurViewController: FormViewController, UIImagePickerControllerDelegat
                 if fetchColorName == nil {
                     row.value = "みどり"
                 } else {
-                    print(fetchColorName)
                     row.value = fetchColorName
                 }
             }.onChange {[unowned self] row  in
@@ -87,11 +92,7 @@ class ConfigurViewController: FormViewController, UIImagePickerControllerDelegat
                     print(valu)
                     if valu == "画像" {
                         print("gazou")
-                        let picker = UIImagePickerController()
-                        picker.sourceType = .photoLibrary
-                        picker.delegate = self
-                        present(picker, animated: true)
-                        self.present(picker, animated: true, completion: nil)
+                        self.setImagePicker()
                         UserDefaults.standard.set(valu, forKey: "ColorName")
                     } else {
                         print(valu)
@@ -110,31 +111,6 @@ class ConfigurViewController: FormViewController, UIImagePickerControllerDelegat
             }
     }
     
-    //バイブレーション設定
-    func fostVibrationCoufigur() {
-        self.fetchVivrationValue = UserDefaults.standard.bool(forKey: "Vibration")
-        if fetchVivrationValue == true {
-            AudioServicesDisposeSystemSoundID(1003)
-        } else if fetchVivrationValue == false {
-            print("振動しない")
-        }
-    }
-    
-    //プッシュ通知設置
-    func pushConfigur() {
-        self.fetchPuhValue = UserDefaults.standard.bool(forKey: "Push")
-        if self.fetchPuhValue == true {
-            let content = UNMutableNotificationContent()
-            content.title = "目標達成！！"
-            content.body = "どんどん頑張ろう！"
-            content.sound = UNNotificationSound.default
-            let request = UNNotificationRequest(identifier: "immediately", content: content, trigger: nil)
-            UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
-        } else if self.fetchPuhValue == false {
-            print("何もしない")
-        }
-    }
-    
     //効果音
     func fostSoundCoufigur() {
         let fetchSoundId = UserDefaults.standard.string(forKey: "SoundID")
@@ -142,26 +118,18 @@ class ConfigurViewController: FormViewController, UIImagePickerControllerDelegat
         switch data {
         case "タップ":
             self.selectSoundId = 1104
-            self.soundTyoe(selectSoundId: self.selectSoundId)
+            self.soundTypeManagaer.setSoundTyoe(selectSoundId: self.selectSoundId)
         case "ロック":
             self.selectSoundId = 1305
-            self.soundTyoe(selectSoundId: self.selectSoundId)
+            self.soundTypeManagaer.setSoundTyoe(selectSoundId: self.selectSoundId)
         case "シャッター":
             self.selectSoundId = 1108
-            self.soundTyoe(selectSoundId: self.selectSoundId)
+            self.soundTypeManagaer.setSoundTyoe(selectSoundId: self.selectSoundId)
         case "プッシュ":
             self.selectSoundId = 1200
-            self.soundTyoe(selectSoundId: self.selectSoundId)
+            self.soundTypeManagaer.setSoundTyoe(selectSoundId: self.selectSoundId)
         default:
             break
-        }
-    }
-    
-    func soundTyoe(selectSoundId: SystemSoundID) {
-        var soundIdRing: SystemSoundID = selectSoundId
-        if let soundUrl = CFBundleCopyResourceURL(CFBundleGetMainBundle(), nil, nil, nil){
-            AudioServicesCreateSystemSoundID(soundUrl, &soundIdRing)
-            AudioServicesPlaySystemSound(soundIdRing)
         }
     }
     
@@ -226,14 +194,14 @@ class ConfigurViewController: FormViewController, UIImagePickerControllerDelegat
         
         cropController.delegate = self
         
-        cropController.customAspectRatio = UIScreen.main.nativeBounds.size
+        cropController.customAspectRatio = CGSize(width: self.fetcImagewidth, height: self.fetcImageheight)
         
         cropController.aspectRatioPickerButtonHidden = true
         cropController.resetAspectRatioEnabled = false
         cropController.rotateButtonsHidden = true
         
         cropController.cropView.cropBoxResizeEnabled = false
-    
+        
         picker.dismiss(animated: true) {
             
             self.present(cropController, animated: true, completion: nil)
