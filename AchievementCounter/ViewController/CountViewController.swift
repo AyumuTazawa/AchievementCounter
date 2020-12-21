@@ -284,7 +284,7 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
         self.achievementAnimation = SwiftConfettiView(frame: self.view.bounds)
         self.view.addSubview(achievementAnimation)
         animationTypeConfigur()
-        achievementAnimation.intensity = 0.8
+        confettiAmountCounfigur()
         achievementAnimation.startConfetti()
     }
     
@@ -309,6 +309,21 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
             achievementAnimation.type = .star
         default:
             achievementAnimation.type = .confetti
+        }
+    }
+    func confettiAmountCounfigur() {
+        let fetchConfettiAmount = UserDefaults.standard.string(forKey: "ConfettiAmount")
+        switch fetchConfettiAmount {
+        case "レベル1":
+            achievementAnimation.intensity = 0.3
+        case "レベル2":
+            achievementAnimation.intensity = 0.5
+        case "レベル3":
+            achievementAnimation.intensity = 0.8
+        case "レベル4":
+            achievementAnimation.intensity = 1.0
+        default:
+            achievementAnimation.intensity = 0.8
         }
     }
     //設置画面に遷移
