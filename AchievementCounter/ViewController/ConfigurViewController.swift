@@ -27,18 +27,29 @@ class ConfigurViewController: FormViewController, UIImagePickerControllerDelegat
     var colorData: String!
     var selectColorName: String!
     var selectImage: NSData!
-   // var image:UIImage?
+    // var image:UIImage?
     var soundTypeManagaer = SoundTypeManagaer()
     var fetcImagewidth: Double!
     var fetcImageheight: Double!
+    var fetchripplesValue: Bool!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.countViewController = CountViewController()
         self.fetcImagewidth = UserDefaults.standard.double(forKey: "Imagewidth")
         self.fetcImageheight = UserDefaults.standard.double(forKey: "Imageheight")
-        //バイブレーション
+        
         form +++ Section("設定")
+            //波紋
+            <<< SwitchRow(){ row in
+                self.fetchripplesValue = UserDefaults.standard.bool(forKey: "Ripples")
+                row.value = self.fetchripplesValue
+                row.title = "タップアニメーション"
+            }.onChange{[unowned self] row in
+                let saveRipplesValue = row.value!
+                UserDefaults.standard.set(saveRipplesValue, forKey: "Ripples")
+            }
+            //バイブレーション
             <<< SwitchRow(){ row in
                 row.title = "バイブレーション"
                 self.fetchVivrationValue = UserDefaults.standard.bool(forKey: "Vibration")
@@ -98,6 +109,7 @@ class ConfigurViewController: FormViewController, UIImagePickerControllerDelegat
                         UserDefaults.standard.set(valu, forKey: "ColorName")
                     } else {
                         print(valu)
+                        UserDefaults.standard.setValue(valu, forKey: "SaveColor")
                         UserDefaults.standard.set(valu, forKey: "ColorName")
                     }
                 }
@@ -175,16 +187,15 @@ class ConfigurViewController: FormViewController, UIImagePickerControllerDelegat
     //背景色設定
     func backgroundColorhConfigur() {
         let fetchColorName = UserDefaults.standard.string(forKey: "ColorName")
+        UserDefaults.standard.setValue(fetchColorName, forKey: "SaveColor")
         self.colorData = fetchColorName
         print("背景設定")
         switch colorData {
         case "みどり":
-            UserDefaults.standard.removeObject(forKey: "backgroundImage")
             self.selectColorName = "7bdcd0"
             self.selectImage = nil
             delgate?.setBackgroundColor()
         case "あお":
-            UserDefaults.standard.removeObject(forKey: "backgroundImage")
             self.selectColorName = "4887BF"
             self.selectImage = nil
             delgate?.setBackgroundColor()
@@ -198,8 +209,13 @@ class ConfigurViewController: FormViewController, UIImagePickerControllerDelegat
             delgate?.setBackgroundColor()
         case "画像":
             let fetchbackgroundImage = UserDefaults.standard.data(forKey: "backgroundImage")
-            self.selectImage = fetchbackgroundImage as! NSData
-            delgate?.setBackgroundColor()
+            if fetchbackgroundImage == nil {
+                setSavedBackgroundImage()
+            } else {
+                self.selectImage = fetchbackgroundImage as! NSData
+                delgate?.setBackgroundColor()
+            }
+            
         default:
             self.selectColorName = "7bdcd0"
             delgate?.setBackgroundColor()
@@ -250,6 +266,31 @@ class ConfigurViewController: FormViewController, UIImagePickerControllerDelegat
     // 画像選択キャンセル
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    func setSavedBackgroundImage() {
+        let saveColor = UserDefaults.standard.string(forKey: "SaveColor")
+        switch saveColor {
+        case "みどり":
+            self.selectColorName = "7bdcd0"
+            self.selectImage = nil
+            delgate?.setBackgroundColor()
+        case "あお":
+            self.selectColorName = "4887BF"
+            self.selectImage = nil
+            delgate?.setBackgroundColor()
+        case "ぴんく":
+            self.selectColorName = "EE869A"
+            self.selectImage = nil
+            delgate?.setBackgroundColor()
+        case "むらさき":
+            self.selectColorName = "a596c7"
+            self.selectImage = nil
+            delgate?.setBackgroundColor()
+        default:
+            self.selectColorName = "7bdcd0"
+            delgate?.setBackgroundColor()
+        }
     }
     
 }
