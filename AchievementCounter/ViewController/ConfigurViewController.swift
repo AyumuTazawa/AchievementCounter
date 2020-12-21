@@ -124,7 +124,24 @@ class ConfigurViewController: FormViewController, UIImagePickerControllerDelegat
             }.onPresent { form, selectorController in
                 selectorController.enableDeselection = false
             }
-        
+            //紙吹雪の量
+            <<< PushRow<String>() { row in
+                row.title = "紙吹雪の量"
+                row.selectorTitle = "紙吹雪の量を選択して下さい"
+                row.options = ["レベル1", "レベル2", "レベル3", "レベル4"]
+                let fetchConfettiAmount = UserDefaults.standard.string(forKey: "ConfettiAmount")
+                if fetchConfettiAmount == nil {
+                    row.value = "レベル3"
+                } else {
+                    row.value = fetchConfettiAmount
+                }
+            }.onChange {[unowned self] row in
+                if let valu = row.value {
+                    UserDefaults.standard.set(valu, forKey: "ConfettiAmount")
+                }
+            }.onPresent { form, selectorController in
+                selectorController.enableDeselection = false
+            }
         form +++ Section("情報")
             <<< LabelRow() { row in
                 let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
