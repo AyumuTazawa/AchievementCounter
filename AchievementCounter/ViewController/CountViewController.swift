@@ -83,9 +83,7 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
     
     func getImageSize() {
         self.imageSize = self.bacgroundImageView.frame.size
-        print(self.imageSize)
         let saveImagewidth = Double(imageSize.width)
-        print(saveImagewidth)
         let saveImageheight = Double(imageSize.height)
         UserDefaults.standard.set(saveImagewidth, forKey: "Imagewidth")
         UserDefaults.standard.set(saveImageheight, forKey: "Imageheight")
@@ -285,7 +283,7 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
     func startAchievementAnimation() {
         self.achievementAnimation = SwiftConfettiView(frame: self.view.bounds)
         self.view.addSubview(achievementAnimation)
-        achievementAnimation.type = .diamond
+        animationTypeConfigur()
         achievementAnimation.intensity = 0.8
         achievementAnimation.startConfetti()
     }
@@ -296,6 +294,22 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
     
     func removeAchievementAnimationView() {
         achievementAnimation.removeFromSuperview()
+    }
+    
+    func animationTypeConfigur() {
+        let fetchanimationType = UserDefaults.standard.string(forKey: "animationType")
+        switch fetchanimationType {
+        case "紙吹雪":
+            achievementAnimation.type = .confetti
+        case "さんかく":
+            achievementAnimation.type = .triangle
+        case "ひしがた":
+            achievementAnimation.type = .diamond
+        case "ほし":
+            achievementAnimation.type = .star
+        default:
+            achievementAnimation.type = .confetti
+        }
     }
     //設置画面に遷移
     @IBAction func toCounfiguar(_ sender: Any) {
