@@ -10,14 +10,16 @@ import UIKit
 import SwiftConfettiView
 import PromiseKit
 
-class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountNumberManagerDelegate, TargetNumberManagerDelegate, AchievementActionManagerDelegate, ConfigurViewControlleDelegate {
+class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountNumberManagerDelegate, TargetNumberManagerDelegate, AchievementActionManagerDelegate, ConfigurViewControlleDelegate, RipplesManagaerDelegate {
     
+    var touchData: UIGestureRecognizer!
     var achievementAnimation: SwiftConfettiView!
     var countNumberManager: CountNumberManager!
     var targetNumberManager: TargetNumberManager!
     var achievementActionManager: AchievementActionManager!
     var configurViewController: ConfigurViewController!
     var vibrationManager: VibrationManager!
+    var ripplesManagaer: RipplesManagaer!
     var imageSize: CGSize!
     @IBOutlet weak var bacgroundImageView: UIImageView!
     @IBOutlet weak var countedNumberDisplayLabel: UILabel!
@@ -34,11 +36,13 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
         self.achievementActionManager = AchievementActionManager()
         self.configurViewController = ConfigurViewController()
         self.vibrationManager = VibrationManager()
+        self.ripplesManagaer = RipplesManagaer()
         
         countNumberManager.delgate = self
         targetNumberManager.delgate = self
         achievementActionManager.delgate = self
         configurViewController.delgate = self
+        ripplesManagaer.delgate = self
         
         let plassGestur = UITapGestureRecognizer(target: self, action: #selector(tapped(_:)))
         plassGestur.delegate = self
@@ -91,8 +95,16 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
     
     @objc func tapped(_ sender: UITapGestureRecognizer) {
         if sender.state == .ended {
+            self.touchData = sender
             self.fostAddNumber()
+            //self.view.ripples(touch: sender)
+            self.ripplesManagaer.ripplesConfiguer(touchData: sender)
+            
         }
+    }
+    
+    func showRipples(touchData: UITapGestureRecognizer) {
+        self.view.ripples(touch: touchData)
     }
     
     func fostAddNumber() {let fetchSoundId = UserDefaults.standard.string(forKey: "SoundID")
