@@ -84,6 +84,8 @@ class ConfigurViewController: FormViewController, UIImagePickerControllerDelegat
                 let fetchColorName = UserDefaults.standard.string(forKey: "ColorName")
                 if fetchColorName == nil {
                     row.value = "みどり"
+                } else if fetchColorName == "画像" {
+                    row.value = nil
                 } else {
                     row.value = fetchColorName
                 }
@@ -98,6 +100,26 @@ class ConfigurViewController: FormViewController, UIImagePickerControllerDelegat
                         print(valu)
                         UserDefaults.standard.set(valu, forKey: "ColorName")
                     }
+                }
+            }.onPresent { form, selectorController in
+                selectorController.enableDeselection = false
+            }
+        //紙吹雪の種類
+        form +++ Section("紙吹雪の設定")
+            <<< PushRow<String>() { row in
+                row.title = "紙吹雪の種類"
+                row.selectorTitle = "紙吹雪の種類を選択して下さい"
+                row.options = ["紙吹雪", "さんかく", "ひしがた", "ほし"]
+                let fetchanimationType = UserDefaults.standard.string(forKey: "animationType")
+                if fetchanimationType == nil {
+                    row.value = "紙吹雪"
+                } else {
+                    row.value = fetchanimationType
+                }
+            }.onChange {[unowned self] row in
+                if let valu = row.value {
+                    print(valu)
+                    UserDefaults.standard.set(valu, forKey: "animationType")
                 }
             }.onPresent { form, selectorController in
                 selectorController.enableDeselection = false
