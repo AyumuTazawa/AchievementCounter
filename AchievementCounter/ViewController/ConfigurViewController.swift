@@ -69,6 +69,25 @@ class ConfigurViewController: FormViewController, UIImagePickerControllerDelegat
                 UserDefaults.standard.set(self.savepushValue, forKey: "Push")
             }
             
+            <<< PushRow<String>() { row in
+                row.title = "テキストカラー"
+                row.selectorTitle = "テキストカラーを選択して下さい"
+                row.options = ["しろ", "くろ", "あお", "あか"]
+                let fetchTextColor = UserDefaults.standard.string(forKey: "TextColor")
+                if fetchTextColor == nil {
+                    row.value = "ホワイト"
+                } else {
+                    row.value = fetchTextColor
+                }
+            }.onChange {[unowned self] row in
+                if let valu = row.value {
+                    UserDefaults.standard.set(valu, forKey: "TextColor")
+                }
+            }.onPresent { form, selectorController in
+                selectorController.enableDeselection = false
+            }
+            
+            
             //効果音
             <<< PushRow<String>() { row in
                 row.title = "効果音"
