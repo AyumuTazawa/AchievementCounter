@@ -10,7 +10,7 @@ import UIKit
 import SwiftConfettiView
 import PromiseKit
 
-class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountNumberManagerDelegate, TargetNumberManagerDelegate, AchievementActionManagerDelegate, ConfigurViewControlleDelegate, RipplesManagaerDelegate {
+class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountNumberManagerDelegate, TargetNumberManagerDelegate, AchievementActionManagerDelegate, ConfigurViewControlleDelegate, RipplesManagaerDelegate, TextColorManagerDelegate {
     
     var touchData: UIGestureRecognizer!
     var achievementAnimation: SwiftConfettiView!
@@ -20,6 +20,7 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
     var configurViewController: ConfigurViewController!
     var vibrationManager: VibrationManager!
     var ripplesManagaer: RipplesManagaer!
+    var textColorManager: TextColorManager!
     var imageSize: CGSize!
     @IBOutlet weak var bacgroundImageView: UIImageView!
     @IBOutlet weak var countedNumberDisplayLabel: UILabel!
@@ -37,12 +38,14 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
         self.configurViewController = ConfigurViewController()
         self.vibrationManager = VibrationManager()
         self.ripplesManagaer = RipplesManagaer()
+        self.textColorManager = TextColorManager()
         
         countNumberManager.delgate = self
         targetNumberManager.delgate = self
         achievementActionManager.delgate = self
         configurViewController.delgate = self
         ripplesManagaer.delgate = self
+        textColorManager.delegate = self
         
         let plassGestur = UITapGestureRecognizer(target: self, action: #selector(tapped(_:)))
         plassGestur.delegate = self
@@ -68,6 +71,7 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
     
     override func viewWillAppear(_ animated: Bool) {
         self.configurViewController.backgroundColorhConfigur()
+        self.textColorManager.textColorConfigur()
     }
     
     func setBackgroundColor() {
@@ -196,6 +200,11 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
     
     func showCountNumber() {
         countedNumberDisplayLabel.text = "\(countNumberManager.fecthCountNumber)"
+        //self.textColor()
+    }
+    
+    func decideTextColor() {
+        countedNumberDisplayLabel.textColor = UIColor(hex: textColorManager.textColorData)
     }
     
     @IBAction func addTargetAction(_ sender: Any) {
