@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0D189BE82C713F1E08E0F389 /* Pods_AchievementCounter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0594550140F533EDE2A85AD /* Pods_AchievementCounter.framework */; };
 		630AEB0D257BE83500F995E1 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630AEB0C257BE83500F995E1 /* UIColor.swift */; };
+		63294E7125930DE00096724F /* TextColorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63294E7025930DE00096724F /* TextColorManager.swift */; };
 		6343768F258B901F00B1B41D /* ImageCompression.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6343768E258B901F00B1B41D /* ImageCompression.swift */; };
 		6347D9582577B5B400B5693B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6347D9572577B5B400B5693B /* AppDelegate.swift */; };
 		6347D95A2577B5B400B5693B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6347D9592577B5B400B5693B /* SceneDelegate.swift */; };
@@ -31,6 +32,7 @@
 
 /* Begin PBXFileReference section */
 		630AEB0C257BE83500F995E1 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		63294E7025930DE00096724F /* TextColorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextColorManager.swift; sourceTree = "<group>"; };
 		6343768E258B901F00B1B41D /* ImageCompression.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCompression.swift; sourceTree = "<group>"; };
 		6347D9542577B5B400B5693B /* AchievementCounter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AchievementCounter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6347D9572577B5B400B5693B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 				63ED0217258E188800B2B58C /* VibrationManager.swift */,
 				63ED021A258E1DC900B2B58C /* PushManager.swift */,
 				63ED021D258E20B200B2B58C /* SoundTypeManagaer.swift */,
+				63294E7025930DE00096724F /* TextColorManager.swift */,
 				63C44C422590C33700793793 /*  RipplesManagaer.swift */,
 				630AEB0C257BE83500F995E1 /* UIColor.swift */,
 				6343768E258B901F00B1B41D /* ImageCompression.swift */,
@@ -270,6 +273,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63294E7125930DE00096724F /* TextColorManager.swift in Sources */,
 				63C44C402590B67B00793793 /*  Ripples.swift in Sources */,
 				6347D9722577B7AA00B5693B /* CountNumberManager.swift in Sources */,
 				63498D0725833F7900DE7468 /* ConfigurViewController.swift in Sources */,
