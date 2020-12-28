@@ -11,4 +11,5 @@ pod 'SwiftConfettiView'
 pod "PromiseKit", "~> 6.8"
 pod 'Eureka'
 pod 'CropViewController'
+pod 'Instructions'
 end
