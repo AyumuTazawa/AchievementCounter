@@ -16,6 +16,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        let userDefaults = UserDefaults.standard
+        let firstStartupKey = "firstStartupKey"
+        let firstStartup = [firstStartupKey: true]
+        userDefaults.register(defaults: firstStartup)
         // 通知許可の取得
         UNUserNotificationCenter.current().requestAuthorization(
             options: [.alert, .badge]){

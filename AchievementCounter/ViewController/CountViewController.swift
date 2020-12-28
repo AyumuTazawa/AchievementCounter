@@ -9,6 +9,7 @@
 import UIKit
 import SwiftConfettiView
 import PromiseKit
+import Instructions
 
 class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountNumberManagerDelegate, TargetNumberManagerDelegate, AchievementActionManagerDelegate, ConfigurViewControlleDelegate, RipplesManagaerDelegate, TextColorManagerDelegate {
     
@@ -22,6 +23,9 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
     var ripplesManagaer: RipplesManagaer!
     var textColorManager: TextColorManager!
     var imageSize: CGSize!
+    var coachController = CoachMarksController()
+    private var pointOfInterest:UIView!
+    private var messages = ["画面をタップして数を数える", "マイナスボタン", "リセットボタン"]
     @IBOutlet weak var bacgroundImageView: UIImageView!
     @IBOutlet weak var countedNumberDisplayLabel: UILabel!
     @IBOutlet weak var deleteButton: UIButton!
@@ -29,6 +33,10 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.coachController.dataSource = self
+        self.pointOfInterest = self.countedNumberDisplayLabel
+        self.pointOfInterest = self.minusButton
+        self.pointOfInterest = self.deleteButton
         
         getImageSize()
         
@@ -87,6 +95,23 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
             //self.view.backgroundColor = UIColor(patternImage: UIImage(data: self.configurViewController.selectImage as Data)!)
             self.bacgroundImageView.image = UIImage(data: self.configurViewController.selectImage as Data)
         }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        let userDefaults = UserDefaults.standard
+        let firstStartupKey = "firstStartupKey"
+        if userDefaults.bool(forKey: firstStartupKey) {
+            userDefaults.set(false, forKey: firstStartupKey)
+            userDefaults.synchronize()
+            self.coachController.start(in: .currentWindow(of: self))
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        self.coachController.stop(immediately: true)
     }
     
     func getImageSize() {
@@ -360,6 +385,26 @@ extension UIViewController {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         present(alertController, animated: true, completion: nil)
+        
+    }
+}
+
+extension CountViewController:CoachMarksControllerDataSource, CoachMarksControllerDelegate{
+    func coachMarksController(_ coachMarksController: CoachMarksController, coachMarkViewsAt index: Int, madeFrom coachMark: CoachMark) -> (bodyView: (UIView & CoachMarkBodyView), arrowView: (UIView & CoachMarkArrowView)?) {
+        let coachViews = coachMarksController.helper.makeDefaultCoachViews(withArrow: true, withNextText: true, arrowOrientation: coachMark.arrowOrientation)
+        coachViews.bodyView.hintLabel.text = self.messages[index]
+        coachViews.bodyView.nextLabel.text = "OK"
+        return (bodyView: coachViews.bodyView, arrowView: coachViews.arrowView)
+    }
+    
+    func numberOfCoachMarks(for coachMarksController: CoachMarksController) -> Int {
+        return self.messages.count
+    }
+    
+    func coachMarksController(_ coachMarksController: CoachMarksController,
+                              coachMarkAt index: Int) -> CoachMark {
+        var views = [self.countedNumberDisplayLabel, self.minusButton, self.deleteButton]
+        return coachMarksController.helper.makeCoachMark(for: views[index], pointOfInterest: nil, cutoutPathMaker: nil)
         
     }
 }
