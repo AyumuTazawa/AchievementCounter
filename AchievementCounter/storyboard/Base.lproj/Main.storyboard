@@ -4,6 +4,7 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -43,11 +44,11 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oUV-wV-AYP">
-                                <rect key="frame" x="20" y="761" width="80" height="80"/>
+                                <rect key="frame" x="20" y="767" width="80" height="74"/>
                                 <color key="backgroundColor" red="0.14901960784313725" green="0.49803921568627452" blue="0.53725490196078429" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="80" id="ClS-5l-SKc"/>
-                                    <constraint firstAttribute="height" constant="80" id="fAB-Ju-qX6"/>
+                                    <constraint firstAttribute="width" constant="80" id="1iP-GJ-Xr4"/>
+                                    <constraint firstAttribute="height" constant="74" id="MXm-0n-VS7"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="35"/>
                                 <state key="normal" title="-">
@@ -63,23 +64,10 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m3E-HU-6nf" customClass="MBCircularProgressBarView">
-                                <rect key="frame" x="105" y="706" width="204" height="156"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="displayP3"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="156" id="Foc-vh-YqG"/>
-                                </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="fontColor">
-                                        <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="progressColor">
-                                        <color key="value" red="0.25932779909999998" green="0.48944574590000001" blue="0.52941176470588236" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="progressStrokeColor">
-                                        <color key="value" red="0.1230748072" green="0.3316141963" blue="0.83408087490000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3p2-fk-EId" customClass="MBCircularProgressBarView">
+                                <rect key="frame" x="118" y="713" width="178" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -91,15 +79,12 @@
                             <constraint firstItem="rGt-Gq-tmj" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="A8d-gB-EJ8"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="WJK-SP-InF" secondAttribute="trailing" constant="20" id="BkJ-o6-6rZ"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="a5A-69-8yW" secondAttribute="trailing" id="Cab-dG-2Tt"/>
-                            <constraint firstItem="oUV-wV-AYP" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="GXW-rD-oWZ"/>
                             <constraint firstItem="WJK-SP-InF" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="LyR-3d-3d6"/>
-                            <constraint firstItem="m3E-HU-6nf" firstAttribute="leading" secondItem="oUV-wV-AYP" secondAttribute="trailing" constant="5" id="Myb-dL-7oC"/>
                             <constraint firstAttribute="trailing" secondItem="rGt-Gq-tmj" secondAttribute="trailing" id="PHM-eD-zWl"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="oUV-wV-AYP" secondAttribute="bottom" constant="21" id="WPe-BX-x5S"/>
+                            <constraint firstItem="oUV-wV-AYP" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="Wpa-6y-QWE"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="bLl-5W-Clr" secondAttribute="trailing" constant="20" id="XfS-7l-e7Q"/>
-                            <constraint firstItem="bLl-5W-Clr" firstAttribute="leading" secondItem="m3E-HU-6nf" secondAttribute="trailing" constant="5" id="iXM-QF-8o2"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="oUV-wV-AYP" secondAttribute="bottom" constant="21" id="j6k-fP-f8w"/>
                             <constraint firstItem="rGt-Gq-tmj" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="kX1-fd-Ufu"/>
-                            <constraint firstItem="m3E-HU-6nf" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="khn-7o-3YU"/>
                             <constraint firstItem="rGt-Gq-tmj" firstAttribute="top" secondItem="WJK-SP-InF" secondAttribute="bottom" constant="36.329999999999998" id="oGC-R0-MuZ"/>
                             <constraint firstItem="a5A-69-8yW" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="ose-TC-Dpd"/>
                             <constraint firstItem="a5A-69-8yW" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="q2U-Bm-aN9"/>
@@ -123,7 +108,7 @@
                         <outlet property="countedNumberDisplayLabel" destination="WJK-SP-InF" id="rXO-19-YzO"/>
                         <outlet property="deleteButton" destination="bLl-5W-Clr" id="7xg-bu-FNu"/>
                         <outlet property="minusButton" destination="oUV-wV-AYP" id="cX2-hk-7Z0"/>
-                        <outlet property="progressView" destination="m3E-HU-6nf" id="jAN-NR-2zC"/>
+                        <outlet property="progressView" destination="3p2-fk-EId" id="23p-W5-Goq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -150,4 +135,9 @@
             <point key="canvasLocation" x="61" y="139"/>
         </scene>
     </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>
