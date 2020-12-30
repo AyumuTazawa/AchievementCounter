@@ -10,6 +10,7 @@ import UIKit
 import SwiftConfettiView
 import PromiseKit
 import Instructions
+import MBCircularProgressBar
 
 class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountNumberManagerDelegate, TargetNumberManagerDelegate, AchievementActionManagerDelegate, ConfigurViewControlleDelegate, RipplesManagaerDelegate, TextColorManagerDelegate {
     
@@ -24,15 +25,20 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
     var textColorManager: TextColorManager!
     var imageSize: CGSize!
     var coachController = CoachMarksController()
+    var achievementPercent: Float!
     private var pointOfInterest:UIView!
     private var messages = ["画面をタップして数を数える", "マイナスボタン", "リセットボタン"]
     @IBOutlet weak var bacgroundImageView: UIImageView!
     @IBOutlet weak var countedNumberDisplayLabel: UILabel!
     @IBOutlet weak var deleteButton: UIButton!
     @IBOutlet weak var minusButton: UIButton!
+    @IBOutlet weak var progressView: MBCircularProgressBarView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        progressView.maxValue = 100
+        
         self.coachController.dataSource = self
         self.pointOfInterest = self.countedNumberDisplayLabel
         self.pointOfInterest = self.minusButton
@@ -75,6 +81,8 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
         self.countNumberManager.fecthData()
         //navigationTitleセット
         self.targetNumberManager.fecthTargetNumber()
+        
+        self.percent()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -136,7 +144,8 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
         self.view.ripples(touch: touchData)
     }
     
-    func fostAddNumber() {let fetchSoundId = UserDefaults.standard.string(forKey: "SoundID")
+    func fostAddNumber() {
+        let fetchSoundId = UserDefaults.standard.string(forKey: "SoundID")
         self.vibrationManager.fostVibrationCoufigur()
         self.configurViewController.fostSoundCoufigur()
         
@@ -152,8 +161,9 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
                 self.countNumberManager.fecthData()
             }.catch { err in
                 self.showErrorAlert(title: "エラー", message: "操作をやり直してください")
+            }.finally {
+                self.percent()
             }
-            
         case -1:
             firstly {
                 self.countNumberManager.plassNumber()
@@ -181,6 +191,8 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
                 self.achievementActionManager.achievementAction(countNumber: self.countNumberManager.fecthCountNumber, targetNumber: self.targetNumberManager.targetNumber)
             }
         }
+        self.targetNumberManager.fecthTargetNumber()
+        self.percent()
     }
     
     @IBAction func minusAction(_ sender: Any) {
@@ -211,6 +223,7 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
                 self.showErrorAlert(title: "エラー", message: "操作をやり直してください")
             }
         }
+        self.percent()
     }
     
     @IBAction func deleteAction(_ sender: Any) {
@@ -220,6 +233,26 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
             self.countNumberManager.fecthData()
         }.catch { err in
             self.showErrorAlert(title: "エラー", message: "操作をやり直してください")
+        }
+        self.percent()
+    }
+
+    func percent() -> Promise<Void> {
+        return Promise { resolver in
+            if targetNumberManager.targetNumber == 0 {
+                progressView.value = 0
+            } else if countNumberManager.fecthCountNumber < 0 {
+                print("何もしない")
+            } else {
+                var number = Float(countNumberManager.fecthCountNumber)
+                print(number)
+                var targetNumber = Float(targetNumberManager.targetNumber)
+                print(targetNumber)
+                achievementPercent = Float(number / targetNumber * 100)
+                progressView.value = CGFloat(achievementPercent)
+            }
+            
+            resolver.fulfill(())
         }
     }
     
@@ -258,6 +291,8 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
         let deleteTargetAction = UIAlertAction(title: "目標回数を削除", style: UIAlertAction.Style.destructive, handler: {
             (action: UIAlertAction!) in
             self.targetNumberManager.deleteAchievement()
+            self.targetNumberManager.fecthTargetNumber()
+            self.percent()
         })
         let cancelAction = UIAlertAction(title: "キャンセル", style: UIAlertAction.Style.cancel, handler: {
             (action: UIAlertAction!) in
@@ -299,6 +334,8 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
                 if let addTargeText = Int((addTargeAlertTextField?.text)!) {
                     
                     self.fostSetTarget(addTargeText: addTargeText)
+                    self.targetNumberManager.fecthTargetNumber()
+                    self.percent()
                 }
             }
         )
@@ -324,6 +361,7 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
                 self.showErrorAlert(title: "エラー", message: "操作をやり直してください")
             }
         }
+        self.percent()
     }
     
     func startAchievementAnimation() {
