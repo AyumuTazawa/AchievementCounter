@@ -32,13 +32,26 @@ class ConfigurViewController: FormViewController, UIImagePickerControllerDelegat
     var fetcImagewidth: Double!
     var fetcImageheight: Double!
     var fetchripplesValue: Bool!
+    var fetchTheme: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.countViewController = CountViewController()
         self.fetcImagewidth = UserDefaults.standard.double(forKey: "Imagewidth")
         self.fetcImageheight = UserDefaults.standard.double(forKey: "Imageheight")
-        
+        //テーマ
+        form +++ Section("テーマ")
+            <<< TextRow(){ row in
+                row.title = "取り組むこと"
+                row.placeholder = "(例)腕立て10回3セット"
+                fetchTheme = UserDefaults.standard.string(forKey: "Theme")
+                row.value = fetchTheme
+                
+            }.onChange{ row in
+                var saveTheme:String!
+                saveTheme = row.value
+                UserDefaults.standard.set(saveTheme, forKey: "Theme")
+                }
         form +++ Section("設定")
             //波紋
             <<< SwitchRow(){ row in
