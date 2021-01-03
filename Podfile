@@ -4,12 +4,14 @@
 target 'AchievementCounter' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
-
+  
   # Pods for AchievementCounter
-
-pod 'SwiftConfettiView'
-pod "PromiseKit", "~> 6.8"
-pod 'Eureka'
-pod 'CropViewController'
-pod 'Instructions'
-end
+  
+  pod 'SwiftConfettiView'
+  pod "PromiseKit", "~> 6.8"
+  pod 'Eureka'
+  pod 'CropViewController'
+  pod 'Instructions'
+  pod "MBCircularProgressBar"
+  
+  end
