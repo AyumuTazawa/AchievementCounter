@@ -2,7 +2,7 @@
 //  SplashViewController.swift
 //  AchievementCounter
 //
-//  Created by 田澤歩 on 2021/01/01.
+//  Created by 田澤歩 on 2021/01/09.
 //  Copyright © 2021 net.ayumutazawa. All rights reserved.
 //
 
@@ -58,3 +58,4 @@ class SplashViewController: UIViewController {
     
     
 }
+
