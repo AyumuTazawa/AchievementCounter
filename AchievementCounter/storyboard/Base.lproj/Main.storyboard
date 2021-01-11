@@ -4,7 +4,6 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -44,11 +43,11 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oUV-wV-AYP">
-                                <rect key="frame" x="20" y="767" width="80" height="74"/>
+                                <rect key="frame" x="20" y="761" width="80" height="80"/>
                                 <color key="backgroundColor" red="0.14901960784313725" green="0.49803921568627452" blue="0.53725490196078429" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="80" id="1iP-GJ-Xr4"/>
-                                    <constraint firstAttribute="height" constant="74" id="MXm-0n-VS7"/>
+                                    <constraint firstAttribute="height" constant="80" id="S8J-4r-CR4"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="35"/>
                                 <state key="normal" title="-">
@@ -64,18 +63,30 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3p2-fk-EId" customClass="MBCircularProgressBarView">
-                                <rect key="frame" x="118" y="713" width="178" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c4A-hc-Hy2" customClass="MBCircularProgressBarView">
+                                <rect key="frame" x="103" y="713" width="208" height="128"/>
+                                <color key="backgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="128" id="6IL-CM-p8p"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="progressColor">
+                                        <color key="value" red="0.25932779909999998" green="0.48944574590000001" blue="0.52942073349999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="progressStrokeColor">
+                                        <color key="value" red="0.44806593659999999" green="0.8905639648" blue="0.83961206669999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" red="0.44806593659999999" green="0.8905639648" blue="0.83961206669999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="c4A-hc-Hy2" firstAttribute="leading" secondItem="oUV-wV-AYP" secondAttribute="trailing" constant="3" id="2X0-jn-q7h"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="bLl-5W-Clr" secondAttribute="bottom" constant="21" id="2dM-X6-5gj"/>
                             <constraint firstItem="rGt-Gq-tmj" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="3eb-qs-dvC"/>
                             <constraint firstItem="a5A-69-8yW" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="72f-dc-UvT"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="c4A-hc-Hy2" secondAttribute="bottom" constant="21" id="95C-hu-g5J"/>
                             <constraint firstItem="rGt-Gq-tmj" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="A8d-gB-EJ8"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="WJK-SP-InF" secondAttribute="trailing" constant="20" id="BkJ-o6-6rZ"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="a5A-69-8yW" secondAttribute="trailing" id="Cab-dG-2Tt"/>
@@ -83,6 +94,7 @@
                             <constraint firstAttribute="trailing" secondItem="rGt-Gq-tmj" secondAttribute="trailing" id="PHM-eD-zWl"/>
                             <constraint firstItem="oUV-wV-AYP" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="Wpa-6y-QWE"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="bLl-5W-Clr" secondAttribute="trailing" constant="20" id="XfS-7l-e7Q"/>
+                            <constraint firstItem="bLl-5W-Clr" firstAttribute="leading" secondItem="c4A-hc-Hy2" secondAttribute="trailing" constant="3" id="dTb-lH-g5a"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="oUV-wV-AYP" secondAttribute="bottom" constant="21" id="j6k-fP-f8w"/>
                             <constraint firstItem="rGt-Gq-tmj" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="kX1-fd-Ufu"/>
                             <constraint firstItem="rGt-Gq-tmj" firstAttribute="top" secondItem="WJK-SP-InF" secondAttribute="bottom" constant="36.329999999999998" id="oGC-R0-MuZ"/>
@@ -108,7 +120,7 @@
                         <outlet property="countedNumberDisplayLabel" destination="WJK-SP-InF" id="rXO-19-YzO"/>
                         <outlet property="deleteButton" destination="bLl-5W-Clr" id="7xg-bu-FNu"/>
                         <outlet property="minusButton" destination="oUV-wV-AYP" id="cX2-hk-7Z0"/>
-                        <outlet property="progressView" destination="3p2-fk-EId" id="23p-W5-Goq"/>
+                        <outlet property="progressView" destination="c4A-hc-Hy2" id="EsX-0k-Uht"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -135,9 +147,4 @@
             <point key="canvasLocation" x="61" y="139"/>
         </scene>
     </scenes>
-    <resources>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-    </resources>
 </document>
