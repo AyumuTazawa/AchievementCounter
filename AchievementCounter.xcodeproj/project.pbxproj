@@ -8,7 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		0D189BE82C713F1E08E0F389 /* Pods_AchievementCounter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0594550140F533EDE2A85AD /* Pods_AchievementCounter.framework */; };
+		630A35E125A9F353001175E5 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630A35E025A9F353001175E5 /* SplashViewController.swift */; };
 		630AEB0D257BE83500F995E1 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630AEB0C257BE83500F995E1 /* UIColor.swift */; };
+		63251CC7259EFA12007EA392 /* appstore.png in Resources */ = {isa = PBXBuildFile; fileRef = 63251CC6259EFA12007EA392 /* appstore.png */; };
+		63251CDC259F16B3007EA392 /* Splash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63251CDB259F16B3007EA392 /* Splash.storyboard */; };
+		63251CE3259F17C5007EA392 /* appstore.png in Resources */ = {isa = PBXBuildFile; fileRef = 63251CE2259F17C5007EA392 /* appstore.png */; };
 		63294E7125930DE00096724F /* TextColorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63294E7025930DE00096724F /* TextColorManager.swift */; };
 		6343768F258B901F00B1B41D /* ImageCompression.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6343768E258B901F00B1B41D /* ImageCompression.swift */; };
 		6347D9582577B5B400B5693B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6347D9572577B5B400B5693B /* AppDelegate.swift */; };
@@ -31,7 +35,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		630A35E025A9F353001175E5 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		630AEB0C257BE83500F995E1 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		63251CC6259EFA12007EA392 /* appstore.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = appstore.png; path = "../../Downloads/AppIcons (1)/appstore.png"; sourceTree = "<group>"; };
+		63251CDB259F16B3007EA392 /* Splash.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Splash.storyboard; sourceTree = "<group>"; };
+		63251CE2259F17C5007EA392 /* appstore.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = appstore.png; path = "../../../Downloads/AppIcons (1)/appstore.png"; sourceTree = "<group>"; };
 		63294E7025930DE00096724F /* TextColorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextColorManager.swift; sourceTree = "<group>"; };
 		6343768E258B901F00B1B41D /* ImageCompression.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCompression.swift; sourceTree = "<group>"; };
 		6347D9542577B5B400B5693B /* AchievementCounter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AchievementCounter.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -75,6 +83,8 @@
 			children = (
 				6347D95D2577B5B400B5693B /* Main.storyboard */,
 				63498D0825834CB400DE7468 /* Configur.storyboard */,
+				63251CDB259F16B3007EA392 /* Splash.storyboard */,
+				63251CE2259F17C5007EA392 /* appstore.png */,
 			);
 			path = storyboard;
 			sourceTree = "<group>";
@@ -106,6 +116,7 @@
 				6347D9702577B76700B5693B /* ViewController */,
 				633990F12578C192002E3911 /* storyboard */,
 				6347D9632577B5B700B5693B /* Assets.xcassets */,
+				63251CC6259EFA12007EA392 /* appstore.png */,
 				6347D9652577B5B700B5693B /* LaunchScreen.storyboard */,
 				6347D9682577B5B700B5693B /* Info.plist */,
 				6347D9602577B5B400B5693B /* AchievementCounter.xcdatamodeld */,
@@ -116,6 +127,7 @@
 		6347D9702577B76700B5693B /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				630A35E025A9F353001175E5 /* SplashViewController.swift */,
 				6347D96E2577B74400B5693B /* CountViewController.swift */,
 				63498D0625833F7900DE7468 /* ConfigurViewController.swift */,
 			);
@@ -217,10 +229,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63251CC7259EFA12007EA392 /* appstore.png in Resources */,
 				6347D9672577B5B700B5693B /* LaunchScreen.storyboard in Resources */,
+				63251CE3259F17C5007EA392 /* appstore.png in Resources */,
 				6347D9642577B5B700B5693B /* Assets.xcassets in Resources */,
 				6347D95F2577B5B400B5693B /* Main.storyboard in Resources */,
 				63498D0925834CB400DE7468 /* Configur.storyboard in Resources */,
+				63251CDC259F16B3007EA392 /* Splash.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -276,6 +291,7 @@
 				63294E7125930DE00096724F /* TextColorManager.swift in Sources */,
 				63C44C402590B67B00793793 /*  Ripples.swift in Sources */,
 				6347D9722577B7AA00B5693B /* CountNumberManager.swift in Sources */,
+				630A35E125A9F353001175E5 /* SplashViewController.swift in Sources */,
 				63498D0725833F7900DE7468 /* ConfigurViewController.swift in Sources */,
 				6343768F258B901F00B1B41D /* ImageCompression.swift in Sources */,
 				63ED021B258E1DC900B2B58C /* PushManager.swift in Sources */,
@@ -438,14 +454,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1.5;
+				CURRENT_PROJECT_VERSION = 1.7;
 				DEVELOPMENT_TEAM = L48D5AQ7L2;
 				INFOPLIST_FILE = AchievementCounter/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5;
+				MARKETING_VERSION = 1.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ayumutazawa.AchievementCounter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = AhievementCounterProvisioningProfile;
@@ -461,14 +477,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1.5;
+				CURRENT_PROJECT_VERSION = 1.7;
 				DEVELOPMENT_TEAM = L48D5AQ7L2;
 				INFOPLIST_FILE = AchievementCounter/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5;
+				MARKETING_VERSION = 1.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ayumutazawa.AchievementCounter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = AhievementCounterProvisioningProfile;
