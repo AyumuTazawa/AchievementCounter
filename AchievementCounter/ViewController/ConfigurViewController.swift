@@ -186,6 +186,31 @@ class ConfigurViewController: FormViewController, UIImagePickerControllerDelegat
             }.onPresent { form, selectorController in
                 selectorController.enableDeselection = false
             }
+        
+        //Progressbarの設定
+        form +++ Section("プログレスバーの設定")
+            <<< PushRow<String>() { row in
+                row.title = "プログレスカラー"
+                row.selectorTitle = "プログレスバーの色を選択して下さい"
+                row.options = ["しろ", "くろ", "あお", "みどり", "あか"]
+                //ユーザーデフォルト
+                let fetchProgressColor = UserDefaults.standard.string(forKey: "PrpgressColor")
+                print("フェッチカラー\(fetchProgressColor)")
+                if fetchProgressColor == nil {
+                    row.value = "みどり"
+                } else {
+                    row.value = fetchProgressColor
+                }
+            }.onChange {[unowned self] row in
+                if let valu = row.value {
+                    //UserDEfaultsにProgressbarのカラーを保存
+                    UserDefaults.standard.set(valu, forKey: "PrpgressColor")
+                }
+            }.onPresent { form, selectorController in
+                selectorController.enableDeselection = false
+            }
+        
+        //バージョン表示
         form +++ Section("情報")
             <<< LabelRow() { row in
                 let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
