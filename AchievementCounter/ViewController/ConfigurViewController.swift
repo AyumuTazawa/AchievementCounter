@@ -192,7 +192,7 @@ class ConfigurViewController: FormViewController, UIImagePickerControllerDelegat
             <<< PushRow<String>() { row in
                 row.title = "プログレスカラー"
                 row.selectorTitle = "プログレスバーの色を選択して下さい"
-                row.options = ["しろ", "くろ", "あお", "みどり", "あか"]
+                row.options = ["しろ", "くろ", "あお", "みどり", "ぴんく"]
                 //ユーザーデフォルト
                 let fetchProgressColor = UserDefaults.standard.string(forKey: "PrpgressColor")
                 print("フェッチカラー\(fetchProgressColor)")
@@ -217,6 +217,24 @@ class ConfigurViewController: FormViewController, UIImagePickerControllerDelegat
                 row.title = "バージョン"
                 row.value = version
             }
+    }
+    //プログレスバーのカラー変更ロジック
+    func fostProgressColor() {
+        let fetchProgressColor = UserDefaults.standard.string(forKey: "PrpgressColor")
+        switch fetchProgressColor {
+        case "しろ":
+            self.selectColorName = "ffffff"
+        case "くろ":
+            self.selectColorName = "000000"
+        case "あお":
+            self.selectColorName = "4887BF"
+        case "みどり":
+            self.selectColorName = "7bdcd0"
+        case "ぴんく":
+            self.selectColorName = "EE869A"
+        default:
+            break
+        }
     }
     
     //効果音
