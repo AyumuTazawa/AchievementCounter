@@ -90,6 +90,10 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
         self.textColorManager.textColorConfigur()
     }
     
+    func setProgressColor() {
+        
+    }
+    
     func setBackgroundColor() {
         if self.configurViewController.selectColorName == nil {
             print("nanimosinai")
@@ -366,7 +370,8 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
     
     func startAchievementAnimation() {
         self.achievementAnimation = SwiftConfettiView(frame: self.view.bounds)
-        self.view.addSubview(achievementAnimation)
+        self.bacgroundImageView.addSubview(achievementAnimation)
+        //self.view.sendSubviewToBack(achievementAnimation)
         animationTypeConfigur()
         confettiAmountCounfigur()
         achievementAnimation.startConfetti()
