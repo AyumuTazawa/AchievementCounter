@@ -370,8 +370,8 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
     
     func startAchievementAnimation() {
         self.achievementAnimation = SwiftConfettiView(frame: self.view.bounds)
-       self.view.addSubview(achievementAnimation)
-       //self.view.sendSubviewToBack(achievementAnimation)
+        self.bacgroundImageView.addSubview(achievementAnimation)
+        //self.view.sendSubviewToBack(achievementAnimation)
         animationTypeConfigur()
         confettiAmountCounfigur()
         achievementAnimation.startConfetti()
