@@ -18,30 +18,6 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="a5A-69-8yW">
                                 <rect key="frame" x="0.0" y="88" width="414" height="808"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WJK-SP-InF">
-                                <rect key="frame" x="20" y="301.5" width="374" height="110"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="110" id="MoX-7F-dHj"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="95"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bLl-5W-Clr">
-                                <rect key="frame" x="314" y="761" width="80" height="80"/>
-                                <color key="backgroundColor" red="0.1501481533" green="0.4992144704" blue="0.53845840690000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="80" id="RDt-Eb-NIo"/>
-                                    <constraint firstAttribute="height" constant="80" id="pXx-gP-FTF"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="HiraMaruProN-W4" family="Hiragino Maru Gothic ProN" pointSize="15"/>
-                                <state key="normal" title="リセット">
-                                    <color key="titleColor" red="0.95235019919999997" green="0.95248359439999997" blue="0.95230811829999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="deleteAction:" destination="BYZ-38-t0r" eventType="touchDown" id="OpI-mw-dcs"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oUV-wV-AYP">
                                 <rect key="frame" x="20" y="761" width="80" height="80"/>
                                 <color key="backgroundColor" red="0.14901960784313725" green="0.49803921568627452" blue="0.53725490196078429" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -57,6 +33,30 @@
                                     <action selector="minusAction:" destination="BYZ-38-t0r" eventType="touchDown" id="Lrz-F5-LTQ"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bLl-5W-Clr">
+                                <rect key="frame" x="314" y="761" width="80" height="80"/>
+                                <color key="backgroundColor" red="0.1501481533" green="0.4992144704" blue="0.53845840690000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="80" id="RDt-Eb-NIo"/>
+                                    <constraint firstAttribute="height" constant="80" id="pXx-gP-FTF"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HiraMaruProN-W4" family="Hiragino Maru Gothic ProN" pointSize="15"/>
+                                <state key="normal" title="リセット">
+                                    <color key="titleColor" red="0.95235019919999997" green="0.95248359439999997" blue="0.95230811829999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="deleteAction:" destination="BYZ-38-t0r" eventType="touchDown" id="OpI-mw-dcs"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WJK-SP-InF">
+                                <rect key="frame" x="20" y="301.5" width="374" height="110"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="110" id="MoX-7F-dHj"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="95"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rGt-Gq-tmj">
                                 <rect key="frame" x="0.0" y="448" width="414" height="0.0"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
