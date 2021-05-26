@@ -29,11 +29,11 @@ class AchievementActionManager {
                 //アニメーションをスタート
                 self.delgate?.startAchievementAnimation()
                 self.pushManager.pushConfigur()
-                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
                     //アニメーションを止める
                     self.delgate?.stopAchievementAnimation()
                 }
-                DispatchQueue.main.asyncAfter(deadline: .now() + 6) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 8) {
                     self.delgate?.removeAchievementAnimationView()
                 }
             default:
