@@ -62,15 +62,15 @@ class ConfigurViewController: FormViewController, UIImagePickerControllerDelegat
                 let saveRipplesValue = row.value!
                 UserDefaults.standard.set(saveRipplesValue, forKey: "Ripples")
             }
-            //バイブレーション
-            <<< SwitchRow(){ row in
-                row.title = "バイブレーション"
-                self.fetchVivrationValue = UserDefaults.standard.bool(forKey: "Vibration")
-                row.value = self.fetchVivrationValue
-            }.onChange{[unowned self] row in
-                self.saveVibrationValue = row.value!
-                UserDefaults.standard.set(self.saveVibrationValue, forKey: "Vibration")
-            }
+//            //バイブレーション
+//            <<< SwitchRow(){ row in
+//                row.title = "バイブレーション"
+//                self.fetchVivrationValue = UserDefaults.standard.bool(forKey: "Vibration")
+//                row.value = self.fetchVivrationValue
+//            }.onChange{[unowned self] row in
+//                self.saveVibrationValue = row.value!
+//                UserDefaults.standard.set(self.saveVibrationValue, forKey: "Vibration")
+//            }
             
             //プッシュ通知
             <<< SwitchRow(){ row in
