@@ -16,6 +16,7 @@ class TextColorManager {
     
     var textColorData: String!
     var delegate: TextColorManagerDelegate?
+    
     func textColorConfigur() {
         let fetchTextColor = UserDefaults.standard.string(forKey: "TextColor")
         self.textColorData = fetchTextColor
