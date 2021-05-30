@@ -10,8 +10,9 @@ import Foundation
 import UIKit
 
 extension UIView {
+    
     func ripples(touch: UITapGestureRecognizer) {
-
+        
         let location = touch.location(in: self)
         let layer = CAShapeLayer.init()
         self.layer.addSublayer(layer)
@@ -36,7 +37,7 @@ extension UIView {
             context.restoreGState()
             return image!.cgImage
         }()
-
+        
         let animationGroup: CAAnimationGroup = {
             let animation: CABasicAnimation = {
                 let animation = CABasicAnimation(keyPath: "transform.scale")
@@ -48,7 +49,7 @@ extension UIView {
                 animation.toValue = NSNumber(value: 5.0)
                 return animation
             }()
-
+            
             let animation2: CABasicAnimation = {
                 let animation = CABasicAnimation(keyPath: "opacity")
                 animation.duration = 0.5
@@ -58,7 +59,7 @@ extension UIView {
                 animation.toValue = NSNumber(value: 0.0)
                 return animation
             }()
-
+            
             let group = CAAnimationGroup()
             group.beginTime = CACurrentMediaTime()
             group.animations = [animation, animation2]
@@ -66,7 +67,7 @@ extension UIView {
             group.fillMode = CAMediaTimingFillMode.backwards
             return group
         }()
-
+        
         CATransaction.setAnimationDuration(5.0)
         CATransaction.setCompletionBlock({
             layer.removeFromSuperlayer()
