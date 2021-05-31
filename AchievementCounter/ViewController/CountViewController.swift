@@ -400,6 +400,7 @@ class CountViewController: UIViewController, UIGestureRecognizerDelegate, CountN
             achievementAnimation.type = .confetti
         }
     }
+    
     func confettiAmountCounfigur() {
         let fetchConfettiAmount = UserDefaults.standard.string(forKey: "ConfettiAmount")
         switch fetchConfettiAmount {
