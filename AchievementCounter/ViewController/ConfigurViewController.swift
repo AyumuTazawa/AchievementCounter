@@ -192,7 +192,7 @@ class ConfigurViewController: FormViewController, UIImagePickerControllerDelegat
             <<< PushRow<String>() { row in
                 row.title = "プログレスカラー"
                 row.selectorTitle = "プログレスバーの色を選択して下さい"
-                row.options = ["しろ", "くろ", "あお", "みどり", "ぴんく"]
+                row.options = ["しろ", "あお", "みどり", "ぴんく"]
                 //ユーザーデフォルト
                 let fetchProgressColor = UserDefaults.standard.string(forKey: "PrpgressColor")
                 print("フェッチカラー\(fetchProgressColor)")
